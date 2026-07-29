@@ -11,7 +11,7 @@ self-edit.
 
 ## 1. Write for the action
 
-Decide what the reader must **do** or **know**, then write that.
+Decide what you need the reader to **do** or **know**, then write that.
 
 - **Procedures**: imperative, one instruction per step, condition first.
   - ✗ "The retaining bolts should then be removed after ensuring power has been

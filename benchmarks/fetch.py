@@ -33,21 +33,47 @@ from pathlib import Path
 
 CORPUS = Path(__file__).parent / "corpus"
 
+# Genre matters as much as age. A corpus of specifications alone tunes the
+# thresholds for specifications, and most documentation is not a specification.
+# These are grouped by the Diátaxis quadrant they exemplify. Python 3.8 URLs
+# are used deliberately: that documentation set was frozen in 2019 and cannot
+# have been touched by an LLM.
 SOURCES = {
-    "rfc1925_humor.txt": ("https://www.rfc-editor.org/rfc/rfc1925.txt",
-                          "humor/aphorism control (expected to trip detectors)"),
-    "rfc2119_keywords.txt": ("https://www.rfc-editor.org/rfc/rfc2119.txt",
-                             "normative keyword discipline"),
+    # -- reference / specification -----------------------------------------
     "rfc793_tcp.txt": ("https://www.rfc-editor.org/rfc/rfc793.txt",
                        "dense protocol spec; passive-heavy"),
     "rfc1035_dns.txt": ("https://www.rfc-editor.org/rfc/rfc1035.txt",
                         "reference prose + tables"),
+    "rfc2119_keywords.txt": ("https://www.rfc-editor.org/rfc/rfc2119.txt",
+                             "normative keyword discipline"),
     "pep8_style.txt": ("https://peps.python.org/pep-0008/",
                        "prescriptive style guidance"),
-    "pep20_zen.txt": ("https://peps.python.org/pep-0020/",
-                      "extreme brevity control"),
     "pep257_docstrings.txt": ("https://peps.python.org/pep-0257/",
                               "convention prose"),
+    # -- tutorial ----------------------------------------------------------
+    "py38_tutorial_intro.txt": (
+        "https://docs.python.org/3.8/tutorial/introduction.html",
+        "tutorial voice: second person, worked examples (frozen 2019)"),
+    "py38_tutorial_controlflow.txt": (
+        "https://docs.python.org/3.8/tutorial/controlflow.html",
+        "tutorial with heavy code interleaving (frozen 2019)"),
+    # -- how-to ------------------------------------------------------------
+    "py38_howto_logging.txt": (
+        "https://docs.python.org/3.8/howto/logging.html",
+        "how-to genre: task-oriented, imperative (frozen 2019)"),
+    "py38_howto_argparse.txt": (
+        "https://docs.python.org/3.8/howto/argparse.html",
+        "how-to with progressive disclosure (frozen 2019)"),
+    # -- explanation -------------------------------------------------------
+    "py38_faq_design.txt": (
+        "https://docs.python.org/3.8/faq/design.html",
+        "explanation genre: rationale and trade-offs (frozen 2019)"),
+    # -- controls ----------------------------------------------------------
+    "rfc1925_humor.txt": ("https://www.rfc-editor.org/rfc/rfc1925.txt",
+                          "HUMILITY FIXTURE: aphoristic and jokey; it SHOULD "
+                          "trip the tic detectors and it is canon"),
+    "pep20_zen.txt": ("https://peps.python.org/pep-0020/",
+                      "extreme brevity control"),
 }
 
 

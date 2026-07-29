@@ -10,24 +10,26 @@ fixing regardless of authorship.
 
 ```
 $ techlint examples/before.md
-examples/before.md:3:45 major AI-PHRASE Stock construction: "it's important to note that".
-    fix: delete it and state the point
-    why: pure preamble; the sentence works without it
-examples/before.md:4:13 major AI-PHRASE Stock construction: "plays a crucial role".
-    fix: say what it does, or give the consequence of not doing it
-    why: asserts importance instead of stating what the thing does
-examples/before.md:6:35 major AI-VOCAB "delve" is 7.91x more frequent in post-LLM text than the pre-LLM trend predicts.
-    fix: plainer: "examine"
-    why: excess ratio 7.91 (strong tier), Kobak et al. 2025, 15M PubMed abstracts
+examples/before.md:3:1   major    AI-PHRASE      Stock construction: "In today's fast-paced digital landscape".
+examples/before.md:6:40  major    AI-VOCAB       "delve" is 7.91x more frequent in post-LLM text than the pre-LLM trend predicts.
+examples/before.md:19:68 blocker  AI-ARTIFACT    Generated-text artifact: "Studies show".
+examples/before.md:33:22 minor    DOC-PERSON     "The user must" writes about the reader instead of to them.
+examples/before.md:47:34 minor    DOC-LINKTEXT   Link text "click here" does not say where it goes.
+examples/before.md:53:1  minor    DOC-ALT        Image "architecture.png" has no alt text.
 
-1 file(s), 169 words: 4 major, 5 minor, 3 info
+1 file(s), 443 words: 3 blocker, 20 major, 24 minor, 9 info
 
-  filler        38.46  ███████████████████████  cut; the sentences work without them
-  clarity        8.88  █████  rewrite for the reader's working memory
-  structure      2.96  ██  reorganize; the shape is doing the talking
+  fabrication   30.47  ████████  verify these against reality before shipping
+  filler        66.59  █████████████████  cut; the sentences work without them
+  clarity        5.64  █  rewrite for the reader's working memory
+  convention    12.42  ███  align with the style guides your readers already expect
 
-weighted score 50.3/1k words — heavy
+weighted score 115.12/1k words — heavy
 ```
+
+`examples/after.md` is the same document rewritten against those findings —
+396 words, **zero findings**. Both are in the repo, and CI asserts the
+contrast holds.
 
 ## Why the numbers mean something
 
@@ -55,13 +57,15 @@ positive by construction.
 
 | | weighted score |
 |---|---|
-| pre-LLM technical canon (46k words) | **1.38** /1k |
-| deliberately slop-dense fixture | **149.8** /1k |
-| **separation** | **108×** |
+| pre-LLM technical canon (47k words, 12 texts) | **2.12** /1k (range 1.18–4.36) |
+| deliberately slop-dense fixture | **151.8** /1k |
+| **separation** | **72×** |
 
-Four calibration rounds ran while building this, and every one found an
-instrument bug rather than a document defect — including PEP 8 being flagged 19
-times for "underscores", which it uses to mean the `_` character. See
+Every calibration round so far has found an instrument bug rather than a
+document defect — including PEP 8 being flagged 19 times for "underscores",
+which it uses to mean the `_` character. The corpus covers all four Diátaxis
+genres, because genre moves the numbers as much as age does: tutorials and
+how-to guides run warmer than specifications. See
 [docs/calibration.md](docs/calibration.md).
 
 ## Install
@@ -108,6 +112,12 @@ subject-verb distance and stress position (Gopen & Swan), inclusive language,
 Latin abbreviations, RFC 2119 keyword discipline, sentence and paragraph
 budgets.
 
+**Documentation conventions** — link text that says where it goes (Google,
+Microsoft, WCAG 2.4.4) · words that minimize the reader's effort (Google
+word list) · second person · present tense · heading hierarchy and image alt
+text (WCAG) · time-to-first-instruction (Carroll's minimalism) ·
+Flesch-Kincaid grade level · undefined acronyms (opt-in).
+
 **Statistics** — adjacent paragraphs restating one idea, long abstract
 sentences carrying few new facts, repeated n-grams (opt-in).
 
@@ -121,8 +131,8 @@ build.
 wscore = (3.0*blocker + 1.5*major + 0.5*minor) / words * 1000
 ```
 
-Bands are anchored to the calibration corpus: `clean` < 4 · `light` < 10 ·
-`moderate` < 25 · `heavy` ≥ 25.
+Bands are anchored to the calibration corpus: `clean` < 5 · `light` < 12 ·
+`moderate` < 30 · `heavy` ≥ 30, and are configurable with `bands:`.
 
 The score also splits by **axis**, because one number tells you a document
 needs work but not what work:
@@ -187,7 +197,7 @@ Or as a pre-commit hook:
 ```yaml
 repos:
   - repo: https://github.com/volneydouglas/techwriting
-    rev: v1.0.0
+    rev: v1.1.0
     hooks:
       - id: techlint
 ```
@@ -198,6 +208,7 @@ repos:
 techlint/            the linter (stdlib only)
   checks_ai.py       AI tic battery, tiered by measured effect size
   checks_clarity.py  clarity rules with multi-authority backing
+  checks_docs.py     style-guide and accessibility conventions
   checks_links.py    reference validation + scaffolding ratio
   stats.py           distribution instruments
   config.py          per-project config; the framework ships no domain knowledge

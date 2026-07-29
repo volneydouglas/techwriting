@@ -72,8 +72,10 @@ class Config:
     domain_vocabulary: set = field(default_factory=set)
     disable: set = field(default_factory=set)
     exclude: list = field(default_factory=list)
+    bands: dict = field(default_factory=dict)
     enable_ai: bool = True
     enable_clarity: bool = True
+    enable_docs: bool = True
     enable_stats: bool = True
     pedantic: bool = False
     path: str = ""

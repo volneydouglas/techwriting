@@ -3,88 +3,216 @@
   {
    "name": "pep20_zen.txt",
    "words": 223,
-   "wscore": 0.0,
+   "wscore": 2.24,
    "counts": {
     "blocker": 0,
     "major": 0,
-    "minor": 0,
+    "minor": 1,
     "info": 1
    },
    "rules_per_1k": {
-    "CLARITY-PARA": 4.48
+    "CLARITY-PARA": 4.48,
+    "DOC-CONDESCEND": 4.48
    }
   },
   {
    "name": "pep257_docstrings.txt",
    "words": 1491,
-   "wscore": 1.01,
+   "wscore": 2.01,
    "counts": {
     "blocker": 0,
     "major": 0,
-    "minor": 3,
-    "info": 13
+    "minor": 6,
+    "info": 14
    },
    "rules_per_1k": {
     "CLARITY-LENGTH": 6.71,
     "CLARITY-LATIN": 2.68,
-    "CLARITY-PASSIVE": 1.34
+    "DOC-CONDESCEND": 2.01,
+    "CLARITY-PASSIVE": 1.34,
+    "DOC-PLEASE": 0.67
    }
   },
   {
    "name": "pep8_style.txt",
    "words": 6415,
-   "wscore": 1.4,
+   "wscore": 2.03,
    "counts": {
     "blocker": 0,
     "major": 1,
-    "minor": 15,
-    "info": 45
+    "minor": 23,
+    "info": 49
    },
    "rules_per_1k": {
     "CLARITY-LENGTH": 5.61,
     "CLARITY-LATIN": 2.49,
+    "DOC-CONDESCEND": 1.25,
     "CLARITY-PASSIVE": 0.62,
+    "DOC-PLEASE": 0.16,
+    "DOC-HEADING": 0.16,
     "CLARITY-INCLUSIVE": 0.16,
+    "DOC-TENSE": 0.16,
     "CLARITY-NOMINAL": 0.16,
     "AI-VOCAB": 0.16,
     "CLARITY-SVDIST": 0.16,
+    "DOC-PERSON": 0.16,
     "CLARITY-THAT": 0.16
+   }
+  },
+  {
+   "name": "py38_faq_design.txt",
+   "words": 4932,
+   "wscore": 2.84,
+   "counts": {
+    "blocker": 0,
+    "major": 0,
+    "minor": 28,
+    "info": 35
+   },
+   "rules_per_1k": {
+    "CLARITY-LENGTH": 5.68,
+    "DOC-CONDESCEND": 3.45,
+    "CLARITY-LATIN": 1.01,
+    "DOC-ALLOWS": 0.61,
+    "CLARITY-WORDY": 0.41,
+    "CLARITY-PASSIVE": 0.41,
+    "CLARITY-NOMINAL": 0.41,
+    "DOC-PLEASE": 0.2,
+    "CLARITY-STRESS": 0.2,
+    "CLARITY-SVDIST": 0.2,
+    "AI-VOCAB": 0.2
+   }
+  },
+  {
+   "name": "py38_howto_argparse.txt",
+   "words": 3180,
+   "wscore": 3.3,
+   "counts": {
+    "blocker": 0,
+    "major": 0,
+    "minor": 21,
+    "info": 14
+   },
+   "rules_per_1k": {
+    "CLARITY-LENGTH": 5.97,
+    "DOC-CONDESCEND": 3.14,
+    "CLARITY-LATIN": 1.26,
+    "CLARITY-LOCALE": 0.31,
+    "CLARITY-WORDY": 0.31
+   }
+  },
+  {
+   "name": "py38_howto_logging.txt",
+   "words": 6115,
+   "wscore": 2.7,
+   "counts": {
+    "blocker": 0,
+    "major": 1,
+    "minor": 30,
+    "info": 54
+   },
+   "rules_per_1k": {
+    "CLARITY-LENGTH": 5.23,
+    "DOC-CONDESCEND": 2.29,
+    "CLARITY-LATIN": 1.31,
+    "DOC-TENSE": 1.31,
+    "CLARITY-LOCALE": 1.14,
+    "CLARITY-PASSIVE": 0.82,
+    "CLARITY-WORDY": 0.49,
+    "CLARITY-STRESS": 0.33,
+    "DOC-HEADING": 0.16,
+    "CLARITY-SVDIST": 0.16,
+    "CLARITY-NOMINAL": 0.16,
+    "AI-HEDGE": 0.16,
+    "DOC-PLEASE": 0.16,
+    "AI-PHRASE": 0.16
+   }
+  },
+  {
+   "name": "py38_tutorial_controlflow.txt",
+   "words": 4675,
+   "wscore": 2.57,
+   "counts": {
+    "blocker": 0,
+    "major": 0,
+    "minor": 24,
+    "info": 36
+   },
+   "rules_per_1k": {
+    "CLARITY-LENGTH": 6.63,
+    "DOC-CONDESCEND": 1.5,
+    "CLARITY-PASSIVE": 1.5,
+    "DOC-PLEASE": 0.64,
+    "CLARITY-SVDIST": 0.64,
+    "DOC-TENSE": 0.64,
+    "CLARITY-LATIN": 0.64,
+    "DOC-HEADING": 0.21,
+    "CLARITY-NOMINAL": 0.21,
+    "CLARITY-PARA": 0.21
+   }
+  },
+  {
+   "name": "py38_tutorial_intro.txt",
+   "words": 2872,
+   "wscore": 3.13,
+   "counts": {
+    "blocker": 0,
+    "major": 1,
+    "minor": 15,
+    "info": 16
+   },
+   "rules_per_1k": {
+    "CLARITY-LENGTH": 3.48,
+    "DOC-CONDESCEND": 2.44,
+    "CLARITY-LATIN": 1.74,
+    "CLARITY-PASSIVE": 0.7,
+    "CLARITY-NOMINAL": 0.7,
+    "AI-PHRASE": 0.35,
+    "DOC-TENSE": 0.35,
+    "STAT-STALL": 0.35,
+    "CLARITY-SVDIST": 0.35,
+    "DOC-ALLOWS": 0.35,
+    "CLARITY-WORDY": 0.35
    }
   },
   {
    "name": "rfc1035_dns.txt",
    "words": 15315,
-   "wscore": 0.91,
+   "wscore": 1.18,
    "counts": {
     "blocker": 0,
     "major": 0,
-    "minor": 28,
-    "info": 112
+    "minor": 36,
+    "info": 115
    },
    "rules_per_1k": {
     "CLARITY-LENGTH": 5.29,
     "CLARITY-LATIN": 1.76,
     "CLARITY-PASSIVE": 0.65,
+    "DOC-CONDESCEND": 0.52,
     "CLARITY-SVDIST": 0.46,
     "CLARITY-WORDY": 0.33,
-    "CLARITY-THAT": 0.2,
+    "DOC-PERSON": 0.2,
     "CLARITY-PARA": 0.13,
     "CLARITY-INCLUSIVE": 0.13,
+    "DOC-TENSE": 0.13,
     "CLARITY-NOMINAL": 0.13,
+    "DOC-ALLOWS": 0.07,
     "STAT-STALL": 0.07
    }
   },
   {
    "name": "rfc1925_humor.txt",
    "words": 574,
-   "wscore": 1.74,
+   "wscore": 4.36,
    "counts": {
     "blocker": 0,
     "major": 0,
-    "minor": 2,
+    "minor": 5,
     "info": 0
    },
    "rules_per_1k": {
+    "DOC-CONDESCEND": 5.23,
     "AI-VOCAB": 1.74,
     "CLARITY-WORDY": 1.74
    }
@@ -92,43 +220,48 @@
   {
    "name": "rfc2119_keywords.txt",
    "words": 631,
-   "wscore": 2.38,
+   "wscore": 3.17,
    "counts": {
     "blocker": 0,
     "major": 0,
-    "minor": 3,
+    "minor": 4,
     "info": 6
    },
    "rules_per_1k": {
     "CLARITY-LENGTH": 9.51,
     "CLARITY-PASSIVE": 1.58,
     "STAT-ABSTRACT": 1.58,
+    "DOC-CONDESCEND": 1.58,
     "CLARITY-LATIN": 1.58
    }
   },
   {
    "name": "rfc793_tcp.txt",
    "words": 20973,
-   "wscore": 1.72,
+   "wscore": 2.0,
    "counts": {
     "blocker": 0,
     "major": 6,
-    "minor": 54,
-    "info": 158
+    "minor": 66,
+    "info": 163
    },
    "rules_per_1k": {
     "CLARITY-LENGTH": 5.24,
     "CLARITY-LATIN": 1.72,
     "CLARITY-PASSIVE": 0.86,
-    "CLARITY-THAT": 0.67,
+    "DOC-CONDESCEND": 0.57,
     "CLARITY-PARA": 0.48,
+    "DOC-PERSON": 0.48,
     "AI-PHRASE": 0.33,
     "CLARITY-WORDY": 0.33,
+    "DOC-TENSE": 0.29,
     "CLARITY-SVDIST": 0.24,
     "STAT-ABSTRACT": 0.19,
     "CLARITY-INCLUSIVE": 0.19,
     "CLARITY-NOMINAL": 0.1,
-    "AI-HEDGE": 0.05
+    "DOC-PLEASE": 0.1,
+    "AI-HEDGE": 0.05,
+    "DOC-ALLOWS": 0.05
    }
   }
  ],
@@ -136,11 +269,11 @@
   {
    "name": "known_bad.md",
    "words": 247,
-   "wscore": 149.8,
+   "wscore": 151.82,
    "counts": {
     "blocker": 1,
     "major": 19,
-    "minor": 11,
+    "minor": 12,
     "info": 2
    },
    "rules_per_1k": {
@@ -151,25 +284,34 @@
     "AI-DASH": 4.05,
     "AI-OPENER": 4.05,
     "AI-BOLDLIST": 4.05,
-    "AI-ARTIFACT": 4.05
+    "AI-ARTIFACT": 4.05,
+    "DOC-CONDESCEND": 4.05
    }
   }
  ],
- "known_good_wscore": 1.38,
+ "known_good_wscore": 2.12,
  "corpus_rule_rates_per_1k": {
-  "CLARITY-LENGTH": 5.32,
-  "CLARITY-LATIN": 1.84,
-  "CLARITY-PASSIVE": 0.77,
-  "CLARITY-THAT": 0.4,
-  "CLARITY-SVDIST": 0.29,
-  "CLARITY-PARA": 0.29,
-  "CLARITY-WORDY": 0.28,
-  "CLARITY-INCLUSIVE": 0.15,
-  "AI-PHRASE": 0.15,
-  "CLARITY-NOMINAL": 0.11,
-  "STAT-ABSTRACT": 0.11,
+  "CLARITY-LENGTH": 5.38,
+  "CLARITY-LATIN": 1.62,
+  "DOC-CONDESCEND": 1.35,
+  "CLARITY-PASSIVE": 0.76,
+  "DOC-TENSE": 0.31,
+  "CLARITY-WORDY": 0.3,
+  "CLARITY-SVDIST": 0.28,
+  "DOC-PERSON": 0.21,
+  "CLARITY-PARA": 0.21,
+  "CLARITY-NOMINAL": 0.16,
+  "DOC-PLEASE": 0.13,
+  "AI-PHRASE": 0.13,
+  "CLARITY-LOCALE": 0.12,
+  "CLARITY-INCLUSIVE": 0.1,
+  "DOC-ALLOWS": 0.09,
+  "STAT-ABSTRACT": 0.07,
   "AI-VOCAB": 0.04,
-  "STAT-STALL": 0.02,
-  "AI-HEDGE": 0.02
+  "CLARITY-STRESS": 0.04,
+  "DOC-HEADING": 0.04,
+  "STAT-STALL": 0.03,
+  "AI-HEDGE": 0.03,
+  "CLARITY-THAT": 0.02
  }
 }

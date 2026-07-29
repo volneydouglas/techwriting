@@ -39,6 +39,25 @@ NON_TERMINAL_ABBREVS = {
 
 WORD_RE = re.compile(r"[^\s]+")
 
+QUOTED_RE = re.compile(r"\"[^\"\n]{2,200}\"|“[^”\n]{2,200}”|'[^'\n]{4,200}'")
+
+
+def scan_text(sentence, config):
+    """The text a check should match against.
+
+    With `style.quoted_specimens: skip`, quoted spans are blanked out. A
+    document *about* writing quotes every pattern it names -- this repo's own
+    tic catalog scored 98.7 before this existed. Masking preserves offsets, so
+    reported positions stay correct.
+
+    Off by default: in ordinary prose a quotation is usually the author's own
+    words, not a specimen.
+    """
+    text = sentence.text
+    if config.style.get("quoted_specimens") != "skip":
+        return text
+    return QUOTED_RE.sub(lambda m: " " * len(m.group(0)), text)
+
 
 @dataclass
 class Sentence:

@@ -57,7 +57,7 @@ and budgeted — it is a legitimate move used once.
 answer as a sentence.
 
 ### Countdown negation (major)
-"Not fast. Not cheap. Just correct." → one sentence saying what it is.
+`Not fast. Not cheap. Just correct.` → one sentence saying what it is.
 
 ### Participial editorializing (major)
 "Latency dropped, **underscoring** the value of caching."
@@ -155,8 +155,8 @@ and text that *is* right.
   parameters that do not exist, version numbers, benchmark figures. *Every
   factual claim in AI-drafted text needs verification before it ships.* Run the
   commands. Click the links.
-- **The bits test.** After every sentence: *what new fact did the reader just
-  learn?* Count facts, divide by words. A long sentence carrying one fact — or
+- **The bits test.** After every sentence, ask: "what new fact did that
+  teach?" Count facts, divide by words. A long sentence carrying one fact — or
   none — is inflation. If you cannot state the fact in plain English, the
   sentence has no fact; cut it.
 - **Symmetric both-sidesing.** "While X offers advantages, it also presents
@@ -182,5 +182,5 @@ and text that *is* right.
 And the process rule the prose-smells project learned the hard way:
 **never let an agent edit prose open-endedly.** Use agents for read-only
 analysis that returns quoted evidence. Make every creative fix yourself, one at
-a time. Mechanical passes only from an enumerated list of exact quotes, each
+a time. Run mechanical passes only from an enumerated list of exact quotes, each
 verified to match exactly once.

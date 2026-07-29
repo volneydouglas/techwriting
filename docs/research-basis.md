@@ -77,7 +77,7 @@ Two other ideas came from the same project:
 - **Axis breakdown.** sloppylint splits its score into noise / lies / style /
   structure rather than reporting one number. techlint's equivalent —
   fabrication / filler / clarity / structure — says what *kind* of editing a
-  document needs, not just how much.
+  document needs, not only how much.
 - **`AI-PROSE-RATIO`.** Found by running techlint against sloppylint's own
   README: of 297 lines, only 254 words were prose; the rest was tables, badges,
   and bullets. A document built almost entirely from scaffolding performs
@@ -114,6 +114,64 @@ No rule survives here unless at least two independent authorities agree.
 model behind `CLARITY-SVDIST` and `CLARITY-STRESS`. Readers have fixed
 expectations about *where* in a sentence information appears: the topic
 position carries context, the stress position carries emphasis.
+
+## Documentation conventions
+
+A second battery covers what the documentation standards agree on, rather than
+what sentence-level craft requires. Every rule cites at least one named
+authority.
+
+| rule | authority |
+|---|---|
+| `DOC-LINKTEXT` | Google ("don't use phrases such as 'click here'"); Microsoft ("write brief but specific and meaningful link text"); WCAG 2.4.4 — screen readers list links out of context |
+| `DOC-CONDESCEND` | Google word list: *just* is "a filler word that you can delete"; *easy/easily* — "what might be easy for you might not be easy for others". Microsoft: "if we say something is easy and the user finds it hard, we've risked alienating them" |
+| `DOC-PLEASE` | Google: "don't use *please* in the normal course of explaining how to use a product"; "don't use the phrase *please note*" |
+| `DOC-ALLOWS` | Google word list: "allows you to — don't use. Instead, use *lets you*" |
+| `DOC-PERSON` | Google and Microsoft both specify second person and direct address |
+| `DOC-TENSE` | Google and Microsoft: present tense for product behavior |
+| `DOC-ACRONYM` | IEEE 1063, ISO/IEC 26514: define abbreviations at first use. **Opt-in** — see below |
+| `DOC-HEADING` | WCAG 1.3.1: headings carry document structure, so levels must not skip |
+| `DOC-ALT` | WCAG 1.1.1: every image needs a text alternative |
+| `DOC-ACTION` | Carroll, J. (1990), *The Nurnberg Funnel* — minimalism: readers act first and read only when stuck. Diátaxis: how-to and explanation are different documents |
+| `DOC-READABILITY` | Flesch-Kincaid grade level, reported as a metric only |
+
+### Two of these were reshaped by calibration
+
+**`DOC-CONDESCEND` splits by grammatical role.** The first version fired at
+1.34 per 1,000 words on pre-LLM canon, almost entirely on *simple* and *easy*
+used as ordinary adjectives — RFC 821 is the **Simple** Mail Transfer Protocol,
+and "a simple hash table" describes the table, not the reader. Adverbs
+("simply", "obviously", "clearly") are always flagged, because there is no
+technical sense of "simply run this". Adjectives are flagged only in
+reader-directed frames: "it is easy to", "this is simple", "very
+straightforward".
+
+Worth noting honestly: Python's 2019 tutorial still trips this rule — it says
+"very simple", "should be easy", "Of course". The rule is not wrong; the
+guidance postdates the document. That is a style-era difference, the same kind
+the calibration corpus exists to expose.
+
+**`DOC-ACRONYM` is off by default.** It ran at 2.79/1k on canon and nearly all
+of it was wrong: "FILES", "OF", "TOTAL", "PIPE" from headings and tables, plus
+place names from RFC mastheads. Separating an acronym from an emphasized word
+needs a dictionary this tool does not carry. Teams whose house style requires
+expansion can enable it and curate `budgets.known_acronyms`.
+
+## Diátaxis and genre
+
+[Diátaxis](https://diataxis.fr/) identifies four documentation modes —
+tutorial, how-to, reference, explanation — and argues they have different
+jobs and should not be mixed. techlint does not classify documents, but the
+framework shaped two decisions:
+
+- **Modes.** `procedure`, `reference`, and `narrative` carry different
+  sentence budgets and enable different rules, because a runbook and a design
+  doc are not the same artifact.
+- **The calibration corpus is genre-mapped.** It covers all four quadrants
+  rather than specifications alone. That change alone moved the canon range
+  from 1.38 to 2.12: tutorials address the reader directly and run warmer than
+  specs. Anchoring bands on specification prose would have made every tutorial
+  look defective.
 
 ## Calibration
 

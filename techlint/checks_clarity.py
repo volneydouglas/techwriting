@@ -142,9 +142,16 @@ US_RE = re.compile(
 CONTRACTION_RE = re.compile(
     r"\b\w+[’'](?:t|re|ve|ll|d|m)\b|\b(?:it|he|she|that|there|what|who|let)[’']s\b", re.I)
 
+# A dropped "that" only matters when a *clause* follows: "make sure the valve
+# is open". "Check the agent log at /var/log" is an imperative with a plain
+# object and needs no "that" — requiring a following finite verb separates the
+# two. (Found by dogfooding: the rule fired on examples/after.md.)
 MAKE_SURE_RE = re.compile(
     r"\b(make[s]?\s+sure|verify|confirm|ensure|check)\s+"
-    r"(?!that\b|of\b|to\b|for\b|whether\b|if\b)(the|a|an|all|each|every|no|it|you|there)\b",
+    r"(?!that\b|of\b|to\b|for\b|whether\b|if\b)"
+    r"((?:the|a|an|all|each|every|no|it|you|there)\b"
+    r"(?:\s+\w+){0,3}?\s+"
+    r"(?:is|are|was|were|has|have|had|does|do|did|can|will|should|must)\b)",
     re.I)
 
 WORDY = {

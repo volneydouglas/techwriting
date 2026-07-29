@@ -26,6 +26,7 @@ from functools import lru_cache
 from pathlib import Path
 
 from .finding import Finding, Severity
+from .textmodel import scan_text
 
 DATA = Path(__file__).parent / "data"
 
@@ -44,22 +45,8 @@ COPULA_CHAIN_RE = re.compile(
 
 WORD_RE = re.compile(r"[A-Za-z][A-Za-z'’-]*")
 
-QUOTED_RE = re.compile(r"\"[^\"\n]{2,200}\"|“[^”\n]{2,200}”|'[^'\n]{4,200}'")
-
-
-def _scan_text(sentence, config):
-    """The text to match against, with quoted specimens masked if configured.
-
-    Exemption 4 (quoted text), automated. A document *about* writing tics
-    quotes every tic it names -- this repo's own catalog scored 98.7 until
-    this existed. Masking preserves offsets so positions stay correct.
-    Enable with `style.quoted_specimens: skip`; off by default, because in
-    ordinary prose a quotation is usually the author's own words.
-    """
-    text = sentence.text
-    if config.style.get("quoted_specimens") != "skip":
-        return text
-    return QUOTED_RE.sub(lambda m: " " * len(m.group(0)), text)
+# Exemption 4 (quoted text), automated. Shared with the DOC battery.
+_scan_text = scan_text
 
 
 @lru_cache(maxsize=1)

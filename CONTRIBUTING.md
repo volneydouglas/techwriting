@@ -6,7 +6,7 @@ pytest -q
 ```
 
 Bug reports and rule proposals are welcome. The bar for a new rule is higher
-than for most linters, for a reason explained below.
+than for most linters, for the reason explained below.
 
 ## Adding or changing a rule
 
@@ -20,7 +20,7 @@ clarity rules the standing bar is **two independent authorities** — Google,
 Microsoft, the Federal Plain Language Guidelines, RFC 2119, Gopen & Swan. For
 AI-tic rules it is a measured effect size or a corpus-verified rate. Put the
 citation in the finding's `why` field and in `docs/research-basis.md`, so the
-tool can explain itself to the person it just flagged.
+tool can explain itself to the person whose sentence it flagged.
 
 **2. Does it fire on writing that is known to be good?**
 

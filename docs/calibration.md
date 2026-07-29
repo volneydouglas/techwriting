@@ -16,15 +16,38 @@ unambiguously good, and written long before November 2022 — so any tic found i
 it is a false positive by construction. The corpus is **dimension-mapped**:
 each text is a fixture for a specific instrument.
 
-| text | calibrates |
-|---|---|
-| RFC 1925 (*The Twelve Networking Truths*) | **the humility fixture** — aphoristic and jokey; it *should* trip the tic detectors and it is canon |
-| RFC 2119 | normative keyword discipline at its source |
-| RFC 793 (TCP) | dense spec prose; heavy legitimate passive |
-| RFC 1035 (DNS) | reference prose mixed with tables |
-| PEP 8 | prescriptive guidance, imperative mood |
-| PEP 20 | extreme brevity |
-| PEP 257 | convention prose |
+The corpus covers all four [Diátaxis](https://diataxis.fr/) genres. Genre
+moves the numbers as much as age does, and a corpus of specifications alone
+tunes the thresholds for specifications.
+
+| text | genre | calibrates |
+|---|---|---|
+| RFC 793 (TCP) | reference | dense spec prose; heavy legitimate passive |
+| RFC 1035 (DNS) | reference | reference prose mixed with tables |
+| RFC 2119 | reference | normative keyword discipline at its source |
+| PEP 8 | reference | prescriptive guidance, imperative mood |
+| PEP 257 | reference | convention prose |
+| Python 3.8 tutorial (intro, control flow) | tutorial | second person, worked examples |
+| Python 3.8 HOWTO (logging, argparse) | how-to | task-oriented, imperative |
+| Python 3.8 FAQ (design) | explanation | rationale and trade-offs |
+| RFC 1925 (*The Twelve Networking Truths*) | control | **the humility fixture** — aphoristic and jokey; it *should* trip the tic detectors and it is canon |
+| PEP 20 | control | extreme brevity |
+
+Python 3.8 URLs are used deliberately: that documentation set was frozen in
+2019 and cannot have been touched by an LLM.
+
+### What genre diversity changed
+
+Adding tutorials and how-to guides moved the known-good mean from 1.38 to
+2.12, and the top of the range from 6.08 to 4.36 spread across more texts.
+Tutorials address the reader directly, reassure them, and use second person
+throughout — all of which reads warmer to a tic detector than a protocol
+specification does.
+
+The verdict bands were re-anchored as a result: `clean` moved from < 4 to < 5
+so that every canon text, in every genre, still lands in it. Anchoring on
+specifications alone would have made every well-written tutorial look
+defective.
 
 The RFC 1925 role is borrowed from Moby-Dick's role in the NQE corpus: a
 standing counter-example to the idea that "flagged" means "wrong". Deliberate
@@ -50,13 +73,14 @@ reviewable without re-fetching.
 
 | measure | value |
 |---|---|
-| known-good weighted mean | **1.38** /1k words |
-| worst known-good text | 6.08 (PEP 8) |
-| known-bad fixture | **149.8** |
-| **separation** | **108×** |
+| known-good weighted mean | **2.12** /1k words (12 texts, ~47k words) |
+| known-good range | 1.18 (RFC 1035) – 4.36 (RFC 1925, the humility fixture) |
+| known-bad fixture | **151.8** |
+| **separation** | **72×** |
 
-Verdict bands are anchored to these, not guessed: `clean` < 4, `light` < 10,
-`moderate` < 25, `heavy` ≥ 25. Real specification prose has to sit comfortably
+Verdict bands are anchored to these, not guessed: `clean` < 5, `light` < 12,
+`moderate` < 30, `heavy` ≥ 30. Override them per project with `bands:` in
+`techlint.yaml`. Real specification prose has to sit comfortably
 inside `clean`, and it does.
 
 ## The improvement loop
@@ -76,6 +100,13 @@ document defect:
 | 2 | passive made mode-aware; `STAT-ECHO` opt-in; mild vocab tier demoted to density-only | 4.88 | 29.9× |
 | 3 | sentence-length tiers softened; corpus HTML hygiene fixed | 2.04 | 70.5× |
 | 4 | homograph guard (`underscores` the character vs the verb); working participles excluded | 1.38 | 108.6× |
+| 5 | style-guide battery added; `DOC-CONDESCEND` split by grammatical role; `DOC-ACRONYM` made opt-in | 1.78 | 85.3× |
+| 6 | corpus extended to all four Diátaxis genres; bands re-anchored | 2.12 | 71.6× |
+
+Rounds 5 and 6 raise the known-good number, which looks like a regression and
+is not. Round 5 added eleven new rules; round 6 added five new texts in genres
+the corpus had never covered. A number that stays flat while the instrument
+grows is a number that has stopped measuring.
 
 Round 4 is the illustrative one. PEP 8 was flagged 19 times for "underscores" —
 which it uses to mean the `_` character. The finding was real, the rule was
@@ -85,8 +116,8 @@ to PEP 8.
 ## Things the corpus taught us
 
 - **Protocol specs are legitimately passive.** "The URG flag is set when urgent
-  data is sent" has no useful actor. Passive is only a defect where a reader
-  needs to act on it, which is why the rule is now mode-aware.
+  data is sent" has no useful actor. Passive is only a defect where someone
+  must act on it, which is why the rule is now mode-aware.
 - **Repetition is correctness, not sloppiness.** Technical documents restate
   field names, state names, and constraints on purpose.
 - **Long sentences are a style era.** RFC-era prose runs long. That is a fact

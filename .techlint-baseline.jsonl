@@ -43,3 +43,4 @@
 {"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "fostering", "why": "specimen: this word is the subject of the catalog entry naming it"}
 {"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "necessitating", "why": "specimen: this word is the subject of the catalog entry naming it"}
 {"rule": "AI-VOCAB", "file": "docs/exemptions.md", "quote": "Delve", "why": "proper noun (Delve Labs) at sentence start; the capitalization guard cannot distinguish a proper noun from sentence case in that position"}
+{"rule": "DOC-CONDESCEND", "file": "docs/ai-tics.md", "quote": "Just", "why": "specimen: the countdown-negation example this entry names"}

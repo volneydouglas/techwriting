@@ -141,6 +141,16 @@ class TestConventions:
         assert hits and "that" in hits[0].suggestion
         assert not find("Make sure that the valve is open.", "CLARITY-THAT")
 
+    def test_imperative_with_plain_object_is_clean(self):
+        # Found by dogfooding: "check the log" takes an object, not a clause,
+        # so it needs no "that".
+        assert not find("Check the agent log at /var/log/app.log.", "CLARITY-THAT")
+        assert not find("Verify the checksum before you install.", "CLARITY-THAT")
+
+    def test_clause_after_other_verbs_still_flagged(self):
+        assert find("Confirm all the replicas have synced.", "CLARITY-THAT")
+        assert find("Verify the service is running.", "CLARITY-THAT")
+
 
 class TestRemovedAviationRules:
     """Rules that only made sense inside the ASD-STE100 controlled vocabulary."""

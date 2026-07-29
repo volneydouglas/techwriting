@@ -62,7 +62,7 @@ below.
 
 STE counts a parenthetical, a number-plus-unit, an abbreviation, or a
 hyphenated word as one word each. These exist to make the 20-word cap workable.
-With the cap gone they are just a confusing word count. techlint counts plainly:
+With the cap gone they are a confusing word count and nothing more. techlint counts plainly:
 one token, one word.
 
 ### Three-word compound-noun limit — rules 2.1–2.2

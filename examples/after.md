@@ -1,25 +1,97 @@
-# Pump Maintenance
+# Get started with Sentinel
 
-This guide tells you how to do the scheduled maintenance of the pump.
-Do this maintenance each 2,000 hours of operation.
+Sentinel collects metrics, logs, and traces from your services and correlates
+them by trace ID, so you can follow one request across every hop it made.
 
-## Preparation
+This guide takes about 20 minutes and gets you from nothing to a dashboard
+showing live data from one service.
 
-1. Disconnect the power supply.
-2. Release the pressure from the system.
-3. Close the two isolation valves.
-4. Put on your protective equipment.
+## Before you start
 
-## Remove the housing
+You need:
 
-WARNING: Hold the housing when you loosen the bolts. If the housing falls,
-it can cause damage to the impeller.
+- A host with 4 GB of RAM and 20 GB of free disk. Below 4 GB the ingestion
+  pipeline drops spans without logging an error — see
+  [known memory limits](limits.md#ingestion-memory).
+- Administrative access on that host. The installer writes to `/etc/sentinel`
+  and registers a systemd unit.
+- One service you can restart. Instrumentation takes effect on restart.
 
-1. Loosen the four retaining bolts on the housing cover.
-2. Hold the housing and remove the bolts.
-3. Lower the housing to the bench.
+Sentinel runs on Linux and macOS. Windows is not supported.
 
-## Why you do this maintenance
+## Install the agent
 
-Regular maintenance keeps the pump serviceable and prevents unwanted stops.
-It also keeps the pump in the condition that the safety standards specify.
+1. Download the package for your platform from the
+   [supported platforms list](platforms.md).
+
+2. Validate your configuration before you install:
+
+   ```
+   sentinel config validate ./sentinel.yaml
+   ```
+
+   The command exits non-zero and prints the failing key path if the file is
+   malformed. It does not check whether the endpoints it names are reachable.
+
+3. Run the installer:
+
+   ```
+   sudo ./sentinel-install --config ./sentinel.yaml
+   ```
+
+The installer starts the service and prints the dashboard URL. Open that URL
+and confirm that the request-rate panel shows a non-zero value within about
+60 seconds.
+
+![Sentinel architecture: agents on each host forward to a collector, which
+writes to storage and serves the dashboard](architecture.png)
+
+## Instrument one service
+
+Add the client library to your service and restart it:
+
+```
+pip install sentinel-client
+```
+
+```python
+from sentinel import trace
+
+@trace("checkout")
+def handle_checkout(request):
+    ...
+```
+
+The decorator emits one span per call. Nested calls to other instrumented
+functions join the same trace.
+
+## Troubleshoot
+
+**No data in the dashboard after 5 minutes.** Check the agent log at
+`/var/log/sentinel/agent.log`. Two causes account for most of these. Either a
+firewall is blocking outbound port 4317, or the host clock differs from the
+collector's by more than 30 seconds, which lands spans outside the retention
+window.
+
+**The service starts but reports `config: unknown key`.** Sentinel rejects
+unknown configuration keys rather than ignoring them. Compare your file
+against the [configuration reference](config.md).
+
+**Spans appear but are not correlated.** The client propagates trace context
+in the `traceparent` header. A proxy that strips unknown headers breaks
+correlation; add `traceparent` to its allowlist.
+
+## What Sentinel does not do
+
+Sentinel samples at 100% by default and stores 7 days of traces. At sustained
+rates above roughly 50,000 spans per second, storage becomes the bottleneck
+before the collector does. Configure tail sampling before you reach that
+point.
+
+Sentinel does not alert. Route its metrics to your existing alerting system
+through the [Prometheus remote-write endpoint](integrations.md#prometheus).
+
+## Next
+
+- [Configure tail sampling](sampling.md)
+- [Add a second service and follow a trace across both](multi-service.md)

@@ -67,6 +67,20 @@ RULE_DOCS = {
                "routinely cite files and sections that were never written.",
     "AI-PROSE-RATIO": "Most of the document is tables, bullets, and headings rather than "
                       "prose — scaffolding standing in for explanation.",
+    "DOC-LINKTEXT": "Link text that does not say where it goes (\"click here\"). "
+                    "Google, Microsoft, WCAG 2.4.4.",
+    "DOC-CONDESCEND": "Words that tell the reader how they should find this: simply, "
+                      "just, easy, obviously. Google word list; Microsoft.",
+    "DOC-PLEASE": "\"Please\" in instructions. Google: documentation instructs.",
+    "DOC-ALLOWS": "\"allows you to\" — Google prefers \"lets you\".",
+    "DOC-PERSON": "Third person about the reader (\"the user must\") instead of \"you\".",
+    "DOC-TENSE": "Future tense for present behavior (\"will return\" -> \"returns\").",
+    "DOC-ACRONYM": "An acronym never expanded. IEEE 1063, ISO/IEC 26514.",
+    "DOC-HEADING": "Skipped heading level or multiple level-1 headings. WCAG 1.3.1.",
+    "DOC-ALT": "Image with no alt text. WCAG 1.1.1.",
+    "DOC-ACTION": "Procedure spends many words before its first instruction. "
+                  "Carroll's minimalism; Diátaxis separates how-to from explanation.",
+    "DOC-READABILITY": "Flesch-Kincaid grade level above target. A proxy, not a verdict.",
 }
 
 DOC_GLOBS = ("*.md", "*.markdown", "*.txt", "*.rst")
@@ -84,7 +98,7 @@ def build_parser():
     p.add_argument("--locale", choices=["us", "gb"])
     p.add_argument("--config", help="path to techlint.yaml (default: search upward)")
     p.add_argument("--no-config", action="store_true", help="ignore any config file")
-    p.add_argument("--only", choices=["ai", "clarity", "stats"], action="append",
+    p.add_argument("--only", choices=["ai", "clarity", "docs", "stats"], action="append",
                    default=[], help="run only these batteries (repeatable)")
     p.add_argument("--disable", action="append", default=[], metavar="RULE")
     p.add_argument("--baseline", default=DEFAULT_NAME,
@@ -167,6 +181,7 @@ def main(argv=None) -> int:
     if args.only:
         overrides["enable_ai"] = "ai" in args.only
         overrides["enable_clarity"] = "clarity" in args.only
+        overrides["enable_docs"] = "docs" in args.only
         overrides["enable_stats"] = "stats" in args.only
 
     try:
@@ -201,7 +216,7 @@ def main(argv=None) -> int:
         all_findings.extend(findings)
         reports.append(report)
 
-    total = aggregate(reports)
+    total = aggregate(reports, config.bands)
     rank = Severity.ORDER[args.min_severity]
     shown = [f for f in all_findings if Severity.ORDER[f.severity] >= rank]
 

@@ -9,7 +9,17 @@ budgets:
   paragraph_sentences: 6
   em_dash_per_1k: 10
   excess_vocab_per_1k: 18   # pre-LLM technical canon runs 2-9/1k
+  grade_level: 14           # Flesch-Kincaid ceiling, reported as INFO
   # echo_ngrams: true       # off by default: fires on legitimate repetition
+  # check_acronyms: true    # off by default: needs a curated known_acronyms list
+  # known_acronyms: [FQDN, MTLS]
+
+# Verdict bands, anchored to the calibration corpus (see docs/calibration.md).
+# Re-derive them against your own pre-2022 documentation.
+bands:
+  light: 5
+  moderate: 12
+  heavy: 30
 
 style:
   contractions: allow    # Google's developer style guide allows them

@@ -43,8 +43,9 @@ class Axis:
     FILLER = "filler"             # words that carry no information
     CLARITY = "clarity"           # constructions that cost the reader
     STRUCTURE = "structure"       # shape and rhythm of the document
+    CONVENTION = "convention"     # documentation conventions and accessibility
 
-    ALL = [FABRICATION, FILLER, CLARITY, STRUCTURE]
+    ALL = [FABRICATION, FILLER, CLARITY, STRUCTURE, CONVENTION]
 
     BY_RULE = {
         "AI-ARTIFACT": FABRICATION,
@@ -65,6 +66,17 @@ class Axis:
         "AI-UNIFORM": STRUCTURE,
         "AI-EMOJI": STRUCTURE,
         "AI-PROSE-RATIO": STRUCTURE,
+        "DOC-LINKTEXT": CONVENTION,
+        "DOC-CONDESCEND": CONVENTION,
+        "DOC-PLEASE": CONVENTION,
+        "DOC-ALLOWS": CONVENTION,
+        "DOC-PERSON": CONVENTION,
+        "DOC-TENSE": CONVENTION,
+        "DOC-ACRONYM": CONVENTION,
+        "DOC-HEADING": CONVENTION,
+        "DOC-ALT": CONVENTION,
+        "DOC-ACTION": STRUCTURE,
+        "DOC-READABILITY": CLARITY,
     }
 
     ADVICE = {
@@ -72,13 +84,16 @@ class Axis:
         FILLER: "cut; the sentences work without them",
         CLARITY: "rewrite for the reader's working memory",
         STRUCTURE: "reorganize; the shape is doing the talking",
+        CONVENTION: "align with the style guides your readers already expect",
     }
 
     @classmethod
     def of(cls, rule: str) -> str:
         if rule in cls.BY_RULE:
             return cls.BY_RULE[rule]
-        return cls.CLARITY if rule.startswith("CLARITY-") else cls.STRUCTURE
+        if rule.startswith("CLARITY-"):
+            return cls.CLARITY
+        return cls.CONVENTION if rule.startswith("DOC-") else cls.STRUCTURE
 
 
 @dataclass

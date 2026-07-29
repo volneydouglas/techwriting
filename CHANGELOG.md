@@ -1,5 +1,58 @@
 # Changelog
 
+## 1.1.0 — 2026-07-29
+
+Adds a documentation-conventions battery drawn from the major style guides,
+and widens the calibration corpus to cover all four Diátaxis genres.
+
+### New: the `DOC-*` battery
+
+Eleven rules, each citing a named authority:
+
+| rule | catches |
+|---|---|
+| `DOC-LINKTEXT` | "click here" and other link text that does not say where it goes (Google, Microsoft, WCAG 2.4.4) |
+| `DOC-CONDESCEND` | words that minimize the reader's effort — "simply", "obviously", "it is easy to" (Google word list; Microsoft) |
+| `DOC-PLEASE` | "please" in instructions (Google: documentation instructs) |
+| `DOC-ALLOWS` | "allows you to" → "lets you" (Google word list) |
+| `DOC-PERSON` | "the user must" instead of "you" (Google, Microsoft) |
+| `DOC-TENSE` | "will return" for present behavior (Google, Microsoft) |
+| `DOC-HEADING` | skipped heading levels, multiple level-1 headings (WCAG 1.3.1) |
+| `DOC-ALT` | images with no alt text (WCAG 1.1.1) |
+| `DOC-ACTION` | procedures that explain for a long time before instructing (Carroll's minimalism; Diátaxis) |
+| `DOC-READABILITY` | Flesch-Kincaid grade level, as a metric |
+| `DOC-ACRONYM` | abbreviations never expanded (IEEE 1063, ISO/IEC 26514) — **opt-in** |
+
+Two of these were reshaped by calibration before shipping. `DOC-CONDESCEND`
+now splits by grammatical role, because "Simple Mail Transfer Protocol" and
+"a simple hash table" describe things rather than the reader's experience;
+only adverbs and reader-directed frames are flagged. `DOC-ACRONYM` is off by
+default: it ran at 2.79 per 1,000 words on canon and nearly all of it was
+wrong, flagging "FILES" and "TOTAL" from headings.
+
+### Calibration corpus now covers all four genres
+
+The corpus was specifications only, which tuned the thresholds for
+specifications. It now includes tutorials, how-to guides, and explanation
+(Python 3.8 documentation, frozen in 2019). That moved the known-good mean
+from 1.38 to 2.12: genres that address the reader directly run warmer than
+protocol specs.
+
+Verdict bands were re-anchored so every canon text still lands in `clean`:
+`clean` < 5, `light` < 12, `moderate` < 30, `heavy` ≥ 30. They are now
+configurable with `bands:`.
+
+### Also
+
+- A fifth score axis, `convention`, for the new battery.
+- `CLARITY-THAT` no longer fires on "Check the agent log" — a dropped "that"
+  only matters when a clause follows, not a plain object. Found by writing
+  the new example and linting it.
+- Quoted-specimen masking now covers both batteries, not just the AI one.
+- New `examples/` set: a comprehensive 443-word draft scoring 115 across five
+  axes, and its rewrite at 396 words scoring zero, with the six pages it
+  links to so the reference validator has a real tree to check.
+
 ## 1.0.0 — 2026-07-29
 
 First public release.

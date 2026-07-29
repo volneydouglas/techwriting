@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "techlint"
-version = "1.0.0"
+version = "1.1.0"
 description = "Technical-writing linter with AI-tic detection, calibrated against pre-LLM technical prose"
 readme = "README.md"
 requires-python = ">=3.9"
