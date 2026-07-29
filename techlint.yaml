@@ -1,0 +1,27 @@
+# techlint configuration for this repository.
+# Copy this into your own docs repo and edit. Every field is optional.
+
+mode: reference          # procedure | reference | narrative
+locale: us
+
+budgets:
+  sentence_words: 30     # info above this, minor above 1.5x
+  paragraph_sentences: 6
+  em_dash_per_1k: 10
+  excess_vocab_per_1k: 18   # pre-LLM technical canon runs 2-9/1k
+  # echo_ngrams: true       # off by default: fires on legitimate repetition
+
+style:
+  contractions: allow    # Google's developer style guide allows them
+  latin_abbreviations: flag
+  # This repo documents AI tics, so it quotes every one of them. Without this,
+  # docs/ai-tics.md scores 98.7 for specimens it is naming on purpose.
+  quoted_specimens: skip
+
+# Exemption 3 (literal usage), declared once instead of baselined per hit.
+# Words this project uses in their literal technical sense, which the AI
+# vocabulary check must never flag.
+domain_vocabulary:
+  - harness              # test harness
+  - realm                # auth realm
+  - robust               # reliability property

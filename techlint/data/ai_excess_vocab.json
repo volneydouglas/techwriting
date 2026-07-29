@@ -1,0 +1,1386 @@
+{
+ "_source": "Kobak et al. 2025, Science Advances 11(30); data github.com/berenslab/llm-excess-vocab (MIT)",
+ "_method": "ratio = f2024 / (f2022 + 2*(f2022 - f2021)); tiers strong>=5.0, moderate>=2.5, mild>=1.6",
+ "words": {
+  "delves": {
+   "ratio": 28.18,
+   "tier": "strong",
+   "pos": "verb"
+  },
+  "underscores": {
+   "ratio": 13.79,
+   "tier": "strong",
+   "pos": "verb"
+  },
+  "delved": {
+   "ratio": 12.31,
+   "tier": "strong",
+   "pos": "verb"
+  },
+  "meticulously": {
+   "ratio": 11.3,
+   "tier": "strong",
+   "pos": "adverb"
+  },
+  "showcasing": {
+   "ratio": 10.7,
+   "tier": "strong",
+   "pos": "verb"
+  },
+  "intricacies": {
+   "ratio": 10.25,
+   "tier": "strong",
+   "pos": "noun"
+  },
+  "expediting": {
+   "ratio": 8.5,
+   "tier": "strong",
+   "pos": "verb"
+  },
+  "delve": {
+   "ratio": 7.91,
+   "tier": "strong",
+   "pos": "verb"
+  },
+  "intricate": {
+   "ratio": 7.78,
+   "tier": "strong",
+   "pos": "adjective"
+  },
+  "underscoring": {
+   "ratio": 7.48,
+   "tier": "strong",
+   "pos": "verb"
+  },
+  "surpassing": {
+   "ratio": 7.09,
+   "tier": "strong",
+   "pos": "verb"
+  },
+  "delving": {
+   "ratio": 6.95,
+   "tier": "strong",
+   "pos": "verb"
+  },
+  "commendable": {
+   "ratio": 6.82,
+   "tier": "strong",
+   "pos": "adjective"
+  },
+  "underscore": {
+   "ratio": 6.73,
+   "tier": "strong",
+   "pos": "verb"
+  },
+  "excels": {
+   "ratio": 5.87,
+   "tier": "strong",
+   "pos": "verb"
+  },
+  "pioneers": {
+   "ratio": 5.85,
+   "tier": "strong",
+   "pos": "noun"
+  },
+  "grappling": {
+   "ratio": 5.84,
+   "tier": "strong",
+   "pos": "verb"
+  },
+  "renowned": {
+   "ratio": 5.72,
+   "tier": "strong",
+   "pos": "adjective"
+  },
+  "realm": {
+   "ratio": 5.49,
+   "tier": "strong",
+   "pos": "noun"
+  },
+  "garnered": {
+   "ratio": 5.28,
+   "tier": "strong",
+   "pos": "verb"
+  },
+  "revolutionize": {
+   "ratio": 5.23,
+   "tier": "strong",
+   "pos": "verb"
+  },
+  "escalating": {
+   "ratio": 5.22,
+   "tier": "strong",
+   "pos": "verb"
+  },
+  "underscored": {
+   "ratio": 5.14,
+   "tier": "strong",
+   "pos": "verb"
+  },
+  "intricately": {
+   "ratio": 4.98,
+   "tier": "moderate",
+   "pos": "adverb"
+  },
+  "encompassed": {
+   "ratio": 4.94,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "groundbreaking": {
+   "ratio": 4.87,
+   "tier": "moderate",
+   "pos": "adjective"
+  },
+  "encompassing": {
+   "ratio": 4.7,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "emphasizing": {
+   "ratio": 4.67,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "overlooking": {
+   "ratio": 4.42,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "consolidates": {
+   "ratio": 4.35,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "necessitating": {
+   "ratio": 4.25,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "offering": {
+   "ratio": 4.25,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "substantiates": {
+   "ratio": 4.2,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "formidable": {
+   "ratio": 4.08,
+   "tier": "moderate",
+   "pos": "adjective"
+  },
+  "revolutionizing": {
+   "ratio": 4.07,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "emphasising": {
+   "ratio": 3.99,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "showcases": {
+   "ratio": 3.84,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "meticulous": {
+   "ratio": 3.83,
+   "tier": "moderate",
+   "pos": "adjective"
+  },
+  "swift": {
+   "ratio": 3.83,
+   "tier": "moderate",
+   "pos": "adjective"
+  },
+  "showcased": {
+   "ratio": 3.82,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "surpasses": {
+   "ratio": 3.82,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "adept": {
+   "ratio": 3.79,
+   "tier": "moderate",
+   "pos": "adjective"
+  },
+  "encompass": {
+   "ratio": 3.77,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "heightened": {
+   "ratio": 3.77,
+   "tier": "moderate",
+   "pos": "adjective"
+  },
+  "bolstering": {
+   "ratio": 3.76,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "comprehending": {
+   "ratio": 3.74,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "endeavors": {
+   "ratio": 3.65,
+   "tier": "moderate",
+   "pos": "noun"
+  },
+  "advancements": {
+   "ratio": 3.61,
+   "tier": "moderate",
+   "pos": "noun"
+  },
+  "uncharted": {
+   "ratio": 3.58,
+   "tier": "moderate",
+   "pos": "adjective"
+  },
+  "poised": {
+   "ratio": 3.57,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "emerges": {
+   "ratio": 3.5,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "unveiled": {
+   "ratio": 3.44,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "notable": {
+   "ratio": 3.42,
+   "tier": "moderate",
+   "pos": "adjective"
+  },
+  "stands": {
+   "ratio": 3.36,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "unraveling": {
+   "ratio": 3.33,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "urging": {
+   "ratio": 3.29,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "aiding": {
+   "ratio": 3.25,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "scrutinizing": {
+   "ratio": 3.22,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "burgeoning": {
+   "ratio": 3.21,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "hinting": {
+   "ratio": 3.21,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "pinpointed": {
+   "ratio": 3.16,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "realms": {
+   "ratio": 3.16,
+   "tier": "moderate",
+   "pos": "noun"
+  },
+  "fostering": {
+   "ratio": 3.12,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "advocating": {
+   "ratio": 3.11,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "discernible": {
+   "ratio": 3.1,
+   "tier": "moderate",
+   "pos": "adjective"
+  },
+  "leveraging": {
+   "ratio": 3.08,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "pivotal": {
+   "ratio": 3.08,
+   "tier": "moderate",
+   "pos": "adjective"
+  },
+  "seamlessly": {
+   "ratio": 3.08,
+   "tier": "moderate",
+   "pos": "adverb"
+  },
+  "detrimentally": {
+   "ratio": 3.07,
+   "tier": "moderate",
+   "pos": "adverb"
+  },
+  "capitalizing": {
+   "ratio": 3.01,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "dependable": {
+   "ratio": 3.01,
+   "tier": "moderate",
+   "pos": "adjective"
+  },
+  "enhancements": {
+   "ratio": 3.01,
+   "tier": "moderate",
+   "pos": "nount"
+  },
+  "equipping": {
+   "ratio": 3.0,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "fosters": {
+   "ratio": 3.0,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "pinpointing": {
+   "ratio": 2.99,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "transformative": {
+   "ratio": 2.97,
+   "tier": "moderate",
+   "pos": "adjective"
+  },
+  "advancing": {
+   "ratio": 2.96,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "gauged": {
+   "ratio": 2.94,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "unparalleled": {
+   "ratio": 2.93,
+   "tier": "moderate",
+   "pos": "adjective"
+  },
+  "crafting": {
+   "ratio": 2.87,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "multifaceted": {
+   "ratio": 2.87,
+   "tier": "moderate",
+   "pos": "adjective"
+  },
+  "inquiries": {
+   "ratio": 2.85,
+   "tier": "moderate",
+   "pos": "noun"
+  },
+  "uphold": {
+   "ratio": 2.82,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "accentuates": {
+   "ratio": 2.81,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "exceptional": {
+   "ratio": 2.8,
+   "tier": "moderate",
+   "pos": "adjective"
+  },
+  "harnesses": {
+   "ratio": 2.8,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "akin": {
+   "ratio": 2.79,
+   "tier": "moderate",
+   "pos": "adjective"
+  },
+  "illuminates": {
+   "ratio": 2.79,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "interconnectedness": {
+   "ratio": 2.78,
+   "tier": "moderate",
+   "pos": "noun"
+  },
+  "scrutinize": {
+   "ratio": 2.78,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "nuanced": {
+   "ratio": 2.72,
+   "tier": "moderate",
+   "pos": "adjective"
+  },
+  "underexplored": {
+   "ratio": 2.72,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "unveils": {
+   "ratio": 2.72,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "refining": {
+   "ratio": 2.71,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "upholding": {
+   "ratio": 2.71,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "illuminating": {
+   "ratio": 2.69,
+   "tier": "moderate",
+   "pos": "adjective"
+  },
+  "spurred": {
+   "ratio": 2.69,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "surmount": {
+   "ratio": 2.69,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "exacerbating": {
+   "ratio": 2.68,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "promise": {
+   "ratio": 2.68,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "noteworthy": {
+   "ratio": 2.66,
+   "tier": "moderate",
+   "pos": "adjective"
+  },
+  "emphasizes": {
+   "ratio": 2.64,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "notably": {
+   "ratio": 2.63,
+   "tier": "moderate",
+   "pos": "advebr"
+  },
+  "apologizes": {
+   "ratio": 2.62,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "delineates": {
+   "ratio": 2.6,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "emulating": {
+   "ratio": 2.6,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "highlighting": {
+   "ratio": 2.58,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "elevates": {
+   "ratio": 2.57,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "streamlining": {
+   "ratio": 2.57,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "substantiated": {
+   "ratio": 2.57,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "surpassed": {
+   "ratio": 2.57,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "necessitates": {
+   "ratio": 2.55,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "pioneering": {
+   "ratio": 2.55,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "solidify": {
+   "ratio": 2.54,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "interplay": {
+   "ratio": 2.53,
+   "tier": "moderate",
+   "pos": "noun"
+  },
+  "shedding": {
+   "ratio": 2.53,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "endeavours": {
+   "ratio": 2.52,
+   "tier": "moderate",
+   "pos": "noun"
+  },
+  "propelling": {
+   "ratio": 2.52,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "afflicted": {
+   "ratio": 2.5,
+   "tier": "moderate",
+   "pos": "verb"
+  },
+  "encapsulates": {
+   "ratio": 2.49,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "bolstered": {
+   "ratio": 2.48,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "unveil": {
+   "ratio": 2.48,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "discerning": {
+   "ratio": 2.47,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "exceeding": {
+   "ratio": 2.46,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "enhancing": {
+   "ratio": 2.43,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "leverages": {
+   "ratio": 2.43,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "emphasises": {
+   "ratio": 2.41,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "juxtaposed": {
+   "ratio": 2.41,
+   "tier": "mild",
+   "pos": "adjective"
+  },
+  "encompasses": {
+   "ratio": 2.39,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "paving": {
+   "ratio": 2.39,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "streamlines": {
+   "ratio": 2.39,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "augmenting": {
+   "ratio": 2.38,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "hinges": {
+   "ratio": 2.38,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "poses": {
+   "ratio": 2.37,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "posing": {
+   "ratio": 2.37,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "conversely": {
+   "ratio": 2.36,
+   "tier": "mild",
+   "pos": "adverb"
+  },
+  "culminating": {
+   "ratio": 2.36,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "groundwork": {
+   "ratio": 2.36,
+   "tier": "mild",
+   "pos": "noun"
+  },
+  "avenues": {
+   "ratio": 2.35,
+   "tier": "mild",
+   "pos": "noun"
+  },
+  "employs": {
+   "ratio": 2.33,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "exhibiting": {
+   "ratio": 2.33,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "expedite": {
+   "ratio": 2.33,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "discern": {
+   "ratio": 2.32,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "heighten": {
+   "ratio": 2.32,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "necessitate": {
+   "ratio": 2.31,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "employing": {
+   "ratio": 2.3,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "elucidates": {
+   "ratio": 2.29,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "inadequately": {
+   "ratio": 2.29,
+   "tier": "mild",
+   "pos": "adverb"
+  },
+  "spanning": {
+   "ratio": 2.29,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "streamline": {
+   "ratio": 2.29,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "categorizing": {
+   "ratio": 2.28,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "nuances": {
+   "ratio": 2.28,
+   "tier": "mild",
+   "pos": "noun"
+  },
+  "elucidating": {
+   "ratio": 2.27,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "emulation": {
+   "ratio": 2.24,
+   "tier": "mild",
+   "pos": "noun"
+  },
+  "introduces": {
+   "ratio": 2.21,
+   "tier": "mild",
+   "pos": "adjective"
+  },
+  "merges": {
+   "ratio": 2.2,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "unveiling": {
+   "ratio": 2.19,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "warranting": {
+   "ratio": 2.19,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "adhered": {
+   "ratio": 2.18,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "enhances": {
+   "ratio": 2.18,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "pinpoint": {
+   "ratio": 2.18,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "seamless": {
+   "ratio": 2.18,
+   "tier": "mild",
+   "pos": "adjective"
+  },
+  "discerned": {
+   "ratio": 2.17,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "spanned": {
+   "ratio": 2.17,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "facilitating": {
+   "ratio": 2.16,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "serves": {
+   "ratio": 2.16,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "empowers": {
+   "ratio": 2.14,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "pressing": {
+   "ratio": 2.14,
+   "tier": "mild",
+   "pos": "adjective"
+  },
+  "refines": {
+   "ratio": 2.14,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "revolves": {
+   "ratio": 2.14,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "bolster": {
+   "ratio": 2.13,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "refine": {
+   "ratio": 2.13,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "crucial": {
+   "ratio": 2.11,
+   "tier": "mild",
+   "pos": "adjective"
+  },
+  "enduring": {
+   "ratio": 2.1,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "impressive": {
+   "ratio": 2.1,
+   "tier": "mild",
+   "pos": "adjective"
+  },
+  "necessity": {
+   "ratio": 2.09,
+   "tier": "mild",
+   "pos": "noun"
+  },
+  "utilizing": {
+   "ratio": 2.09,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "garnering": {
+   "ratio": 2.08,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "integrates": {
+   "ratio": 2.08,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "foundational": {
+   "ratio": 2.07,
+   "tier": "mild",
+   "pos": "adjective"
+  },
+  "attains": {
+   "ratio": 2.05,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "explores": {
+   "ratio": 2.05,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "affirming": {
+   "ratio": 2.04,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "distinctions": {
+   "ratio": 2.04,
+   "tier": "mild",
+   "pos": "noun"
+  },
+  "insights": {
+   "ratio": 2.04,
+   "tier": "mild",
+   "pos": "noun"
+  },
+  "alongside": {
+   "ratio": 2.03,
+   "tier": "mild",
+   "pos": "preposition"
+  },
+  "correlating": {
+   "ratio": 2.03,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "featuring": {
+   "ratio": 2.02,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "scrutinized": {
+   "ratio": 2.02,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "advancement": {
+   "ratio": 2.01,
+   "tier": "mild",
+   "pos": "noun"
+  },
+  "valuable": {
+   "ratio": 2.01,
+   "tier": "mild",
+   "pos": "adjective"
+  },
+  "compelling": {
+   "ratio": 2.0,
+   "tier": "mild",
+   "pos": "adjective"
+  },
+  "incorporates": {
+   "ratio": 2.0,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "imperative": {
+   "ratio": 1.99,
+   "tier": "mild",
+   "pos": "adjective"
+  },
+  "overlook": {
+   "ratio": 1.99,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "exceptionally": {
+   "ratio": 1.98,
+   "tier": "mild",
+   "pos": "adverb"
+  },
+  "versatility": {
+   "ratio": 1.98,
+   "tier": "mild",
+   "pos": "noun"
+  },
+  "diminishes": {
+   "ratio": 1.97,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "uncovering": {
+   "ratio": 1.97,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "customizing": {
+   "ratio": 1.96,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "surged": {
+   "ratio": 1.96,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "utilizes": {
+   "ratio": 1.96,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "harnessing": {
+   "ratio": 1.95,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "impacting": {
+   "ratio": 1.94,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "strategically": {
+   "ratio": 1.94,
+   "tier": "mild",
+   "pos": "adjective"
+  },
+  "dependability": {
+   "ratio": 1.93,
+   "tier": "mild",
+   "pos": "noun"
+  },
+  "ensuring": {
+   "ratio": 1.93,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "elevate": {
+   "ratio": 1.92,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "elevating": {
+   "ratio": 1.92,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "additionally": {
+   "ratio": 1.91,
+   "tier": "mild",
+   "pos": "adverb"
+  },
+  "adhering": {
+   "ratio": 1.91,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "highlights": {
+   "ratio": 1.91,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "impeding": {
+   "ratio": 1.9,
+   "tier": "mild",
+   "pos": "adjective"
+  },
+  "furnish": {
+   "ratio": 1.89,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "acknowledges": {
+   "ratio": 1.88,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "innovative": {
+   "ratio": 1.88,
+   "tier": "mild",
+   "pos": "adjective"
+  },
+  "unlocking": {
+   "ratio": 1.88,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "incorporating": {
+   "ratio": 1.87,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "overwhelmed": {
+   "ratio": 1.87,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "acknowledging": {
+   "ratio": 1.86,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "invaluable": {
+   "ratio": 1.86,
+   "tier": "mild",
+   "pos": "adjective"
+  },
+  "enabling": {
+   "ratio": 1.85,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "surpass": {
+   "ratio": 1.85,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "swiftly": {
+   "ratio": 1.85,
+   "tier": "mild",
+   "pos": "adverb"
+  },
+  "avenue": {
+   "ratio": 1.84,
+   "tier": "mild",
+   "pos": "noun"
+  },
+  "categorizes": {
+   "ratio": 1.84,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "optimizing": {
+   "ratio": 1.84,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "struggle": {
+   "ratio": 1.84,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "streamlined": {
+   "ratio": 1.83,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "orchestrating": {
+   "ratio": 1.82,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "signifying": {
+   "ratio": 1.82,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "crafted": {
+   "ratio": 1.81,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "demonstrating": {
+   "ratio": 1.81,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "complicating": {
+   "ratio": 1.8,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "emerged": {
+   "ratio": 1.79,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "outlines": {
+   "ratio": 1.79,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "posed": {
+   "ratio": 1.78,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "achieving": {
+   "ratio": 1.77,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "embracing": {
+   "ratio": 1.77,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "emphasize": {
+   "ratio": 1.77,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "complicates": {
+   "ratio": 1.76,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "comprehensive": {
+   "ratio": 1.76,
+   "tier": "mild",
+   "pos": "adjective"
+  },
+  "enhance": {
+   "ratio": 1.76,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "focusing": {
+   "ratio": 1.76,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "combating": {
+   "ratio": 1.75,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "diminishing": {
+   "ratio": 1.75,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "seeks": {
+   "ratio": 1.75,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "amidst": {
+   "ratio": 1.74,
+   "tier": "mild",
+   "pos": "preposition"
+  },
+  "displaying": {
+   "ratio": 1.74,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "harness": {
+   "ratio": 1.74,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "imbalances": {
+   "ratio": 1.74,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "integrating": {
+   "ratio": 1.74,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "primarily": {
+   "ratio": 1.74,
+   "tier": "mild",
+   "pos": "adverb"
+  },
+  "thorough": {
+   "ratio": 1.74,
+   "tier": "mild",
+   "pos": "adjective"
+  },
+  "contributing": {
+   "ratio": 1.73,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "recognizing": {
+   "ratio": 1.73,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "stemming": {
+   "ratio": 1.72,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "thereby": {
+   "ratio": 1.72,
+   "tier": "mild",
+   "pos": "adverb"
+  },
+  "advocates": {
+   "ratio": 1.71,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "investigates": {
+   "ratio": 1.71,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "broader": {
+   "ratio": 1.7,
+   "tier": "mild",
+   "pos": "adjective"
+  },
+  "detailing": {
+   "ratio": 1.68,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "employed": {
+   "ratio": 1.68,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "revealing": {
+   "ratio": 1.68,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "serving": {
+   "ratio": 1.68,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "disrupts": {
+   "ratio": 1.67,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "distinctive": {
+   "ratio": 1.67,
+   "tier": "mild",
+   "pos": "adjective"
+  },
+  "elucidate": {
+   "ratio": 1.67,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "exerting": {
+   "ratio": 1.67,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "evolving": {
+   "ratio": 1.66,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "diverse": {
+   "ratio": 1.64,
+   "tier": "mild",
+   "pos": "adjective"
+  },
+  "pose": {
+   "ratio": 1.63,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "comprehend": {
+   "ratio": 1.62,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "impede": {
+   "ratio": 1.61,
+   "tier": "mild",
+   "pos": "verb"
+  },
+  "inherent": {
+   "ratio": 1.61,
+   "tier": "mild",
+   "pos": "adjective"
+  },
+  "methodologies": {
+   "ratio": 1.61,
+   "tier": "mild",
+   "pos": "noun"
+  }
+ }
+}

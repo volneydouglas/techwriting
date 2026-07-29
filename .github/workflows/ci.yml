@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: pip install -e .[dev]
+      - run: pytest -q
+      - name: Demo — the bad example must trip the gate, the good one must not
+        run: |
+          if techlint --no-color --no-config --gate 10 examples/before.md; then
+            echo "expected before.md to exceed the gate" && exit 1
+          fi
+          techlint --no-color --no-config --gate 10 --mode procedure examples/after.md
+
+  calibrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e .
+      - name: Calibrate against pre-LLM technical prose
+        run: |
+          python benchmarks/fetch.py
+          python benchmarks/run_calibration.py
+      - name: Fail if known-good/known-bad separation collapses
+        run: |
+          python - <<'PY'
+          import json, sys
+          r = json.load(open("benchmarks/results/calibration.json"))
+          good, bad = r["known_good_wscore"], r["known_bad"][0]["wscore"]
+          sep = bad / max(good, 0.01)
+          print(f"known-good {good}  known-bad {bad}  separation {sep:.1f}x")
+          if sep < 20:
+              sys.exit("separation below 20x — the instrument stopped discriminating")
+          if good > 3.0:
+              sys.exit("pre-LLM canon scoring above 3.0 — rules have become too noisy")
+          PY

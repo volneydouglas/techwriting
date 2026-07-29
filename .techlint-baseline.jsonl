@@ -1,0 +1,45 @@
+# Context-reviewed exemptions. Every entry needs a `why`.
+# docs/ai-tics.md is a catalog of AI tics: it names each tic by
+# quoting it, so the detector correctly finds specimens throughout.
+# Reviewed 2026-07-29. Clarity findings are NOT baselined -- those
+# are real and were fixed or accepted on their merits.
+{"rule": "AI-DASH", "file": "docs/ai-tics.md", "quote": "", "why": "specimen: em-dashes quoted in examples of the em-dash tic"}
+{"rule": "AI-BOLDLIST", "file": "docs/ai-tics.md", "quote": "", "why": "specimen: the bold-term list demonstrates the pattern it names"}
+{"rule": "AI-ARTIFACT", "file": "docs/ai-tics.md", "quote": "lorem ipsum", "why": "specimen: placeholder text quoted as an example of the artifact"}
+{"rule": "AI-PHRASE", "file": "docs/ai-tics.md", "quote": "The result? ", "why": "specimen: the construction is quoted as the example being named"}
+{"rule": "AI-PHRASE", "file": "docs/ai-tics.md", "quote": "The catch? ", "why": "specimen: the construction is quoted as the example being named"}
+{"rule": "AI-PHRASE", "file": "docs/ai-tics.md", "quote": "Not fast. Not cheap. Just ", "why": "specimen: the construction is quoted as the example being named"}
+{"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "delves", "why": "specimen: this word is the subject of the catalog entry naming it"}
+{"rule": "AI-VOCAB-DENSITY", "file": "docs/ai-tics.md", "quote": "", "why": "specimen density: the page is a list of these words by design"}
+{"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "underscores", "why": "specimen: this word is the subject of the catalog entry naming it"}
+{"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "meticulously", "why": "specimen: this word is the subject of the catalog entry naming it"}
+{"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "showcasing", "why": "specimen: this word is the subject of the catalog entry naming it"}
+{"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "intricacies", "why": "specimen: this word is the subject of the catalog entry naming it"}
+{"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "intricate", "why": "specimen: this word is the subject of the catalog entry naming it"}
+{"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "surpassing", "why": "specimen: this word is the subject of the catalog entry naming it"}
+{"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "commendable", "why": "specimen: this word is the subject of the catalog entry naming it"}
+{"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "excels", "why": "specimen: this word is the subject of the catalog entry naming it"}
+{"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "grappling", "why": "specimen: this word is the subject of the catalog entry naming it"}
+{"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "renowned", "why": "specimen: this word is the subject of the catalog entry naming it"}
+{"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "garnered", "why": "specimen: this word is the subject of the catalog entry naming it"}
+{"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "revolutionize", "why": "specimen: this word is the subject of the catalog entry naming it"}
+{"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "escalating", "why": "specimen: this word is the subject of the catalog entry naming it"}
+{"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "expediting", "why": "specimen: this word is the subject of the catalog entry naming it"}
+{"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "pioneers", "why": "specimen: this word is the subject of the catalog entry naming it"}
+{"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "encompassing", "why": "specimen: this word is the subject of the catalog entry naming it"}
+{"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "emphasizing", "why": "specimen: this word is the subject of the catalog entry naming it"}
+{"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "formidable", "why": "specimen: this word is the subject of the catalog entry naming it"}
+{"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "groundbreaking", "why": "specimen: this word is the subject of the catalog entry naming it"}
+{"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "meticulous", "why": "specimen: this word is the subject of the catalog entry naming it"}
+{"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "swift", "why": "specimen: this word is the subject of the catalog entry naming it"}
+{"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "adept", "why": "specimen: this word is the subject of the catalog entry naming it"}
+{"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "heightened", "why": "specimen: this word is the subject of the catalog entry naming it"}
+{"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "bolstering", "why": "specimen: this word is the subject of the catalog entry naming it"}
+{"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "advancements", "why": "specimen: this word is the subject of the catalog entry naming it"}
+{"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "uncharted", "why": "specimen: this word is the subject of the catalog entry naming it"}
+{"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "poised", "why": "specimen: this word is the subject of the catalog entry naming it"}
+{"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "unveiled", "why": "specimen: this word is the subject of the catalog entry naming it"}
+{"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "notable", "why": "specimen: this word is the subject of the catalog entry naming it"}
+{"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "fostering", "why": "specimen: this word is the subject of the catalog entry naming it"}
+{"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "necessitating", "why": "specimen: this word is the subject of the catalog entry naming it"}
+{"rule": "AI-VOCAB", "file": "docs/exemptions.md", "quote": "Delve", "why": "proper noun (Delve Labs) at sentence start; the capitalization guard cannot distinguish a proper noun from sentence case in that position"}

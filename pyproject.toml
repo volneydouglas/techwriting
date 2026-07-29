@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "techlint"
+version = "0.2.0"
+description = "Technical-writing linter with AI-tic detection, calibrated against pre-LLM technical prose"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+keywords = ["technical-writing", "linter", "ai-detection", "llm", "style", "documentation"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Topic :: Documentation",
+    "Topic :: Text Processing :: Linguistic",
+    "Programming Language :: Python :: 3",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+yaml = ["PyYAML>=6"]
+
+[project.scripts]
+techlint = "techlint.cli:main"
+
+[tool.setuptools]
+packages = ["techlint"]
+
+[tool.setuptools.package-data]
+techlint = ["data/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

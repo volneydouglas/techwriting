@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.venv/
+.cache/
+*.pdf
+
+# Calibration texts are fetched on demand; results are committed.
+benchmarks/corpus/

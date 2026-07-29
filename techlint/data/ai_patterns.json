@@ -1,0 +1,55 @@
+{
+ "_note": "Structural and phrasal AI tics. `why` states the evidence; `fix` is the remediation. Severity: blocker/major/minor. Sources are recorded in docs/research-basis.md.",
+
+ "artifacts": [
+  {"id": "chat-frame", "pattern": "\\bas an ai(?: language)?(?: model)?\\b|\\bi'?m an ai\\b|\\bi (?:cannot|can'?t) browse the (?:internet|web)\\b|\\bmy (?:knowledge|training) (?:cutoff|data) (?:is|extends)\\b", "why": "the assistant's chat frame leaked into the document", "fix": "delete"},
+  {"id": "chat-pleasantry", "pattern": "\\b(?:certainly|absolutely|of course)[!,]\\s+(?:here'?s|here is|i'?d be happy)\\b|\\bi hope this helps\\b|\\bgreat question\\b|\\blet me know if you(?:'d| would) like\\b|\\bfeel free to (?:ask|reach out)\\b", "why": "conversational assistant register, not documentation", "fix": "delete"},
+  {"id": "unfilled-placeholder", "pattern": "\\[(?:insert|your|company|product|name|todo|tbd|xx+)[^\\]]{0,40}\\]|\\{\\{[^}]{1,40}\\}\\}|\\blorem ipsum\\b|\\bplaceholder text\\b", "why": "generated scaffolding was never filled in", "fix": "supply the real value"},
+  {"id": "fabricated-hedge", "pattern": "\\b(?:studies|research|experts) (?:show|shows|suggest|suggests|indicate|indicates)\\b(?![^.]{0,80}(?:\\[|\\(|http|et al))", "why": "appeal to unnamed authority; the classic shape of a fabricated citation", "fix": "cite the source or delete the claim"}
+ ],
+
+ "phrases": [
+  {"id": "throat-clearing", "severity": "major", "pattern": "\\bit(?:'s| is|\\u2019s) (?:also )?(?:important|worth|essential|crucial|vital|necessary) to (?:note|remember|mention|understand|recognize|consider|point out|highlight)(?: that)?\\b|\\bit (?:should|must) be noted that\\b|\\bit is worth noting that\\b", "why": "pure preamble; the sentence works without it", "fix": "delete it and state the point"},
+  {"id": "scene-setting", "severity": "major", "pattern": "\\bin (?:today|toady)(?:'s|\\u2019s) (?:(?:fast-paced|digital|modern|ever-changing|ever-evolving|competitive|dynamic|rapidly changing|complex) ){0,3}(?:world|age|era|landscape|environment|market|climate)\\b|\\bin the (?:ever-)?(?:evolving|changing|modern) (?:world|landscape|field|realm) of\\b|\\bin an era (?:of|where)\\b", "why": "generic scene-setting that carries no information", "fix": "delete the clause; start at the point"},
+  {"id": "importance-claim", "severity": "major", "pattern": "\\bplays? an? (?:crucial|vital|pivotal|key|significant|critical|important|central) role\\b|\\bis (?:crucial|vital|pivotal|essential|critical) (?:for|to|in)\\b|\\bcannot be overstated\\b", "why": "asserts importance instead of stating what the thing does", "fix": "say what it does, or give the consequence of not doing it"},
+  {"id": "antithesis", "severity": "major", "pattern": "\\b(?:it|this|that)(?:'s| is|\\u2019s| was)? not (?:just|only|merely|simply) (?:about )?[^.;\\u2014\\u2013]{2,60}[,;\\u2014\\u2013-]+\\s*(?:it(?:'s| is|\\u2019s| was)?|but)\\b|\\bnot (?:just|only|merely|simply) an? [^.;\\u2014\\u2013]{2,50}[,;\\u2014\\u2013-]+\\s*but\\b|\\bmore than just an?\\b|\\b(?:isn'?t|is not|wasn'?t|was not) (?:just|merely|only) [^.;]{2,50}[.;]\\s*(?:It|This|That) (?:is|was|\\u2019s|'s)\\b", "why": "the antithesis template: sets up a strawman to sound profound", "fix": "state the one thing that is true"},
+  {"id": "x-not-y", "severity": "minor", "pattern": "\\b(?:is|are|was|were|be) an? [a-z][a-z -]{2,30}, not an? [a-z][a-z -]{2,30}\\b|\\b[a-z]{3,} (?:is|are) the (?:job|point|goal), not\\b", "why": "the 'X, not Y' figure; fine once, a rhythm in bulk", "fix": "budgeted -- keep the strongest one"},
+  {"id": "self-posed-qa", "severity": "major", "pattern": "\\bThe (?:result|answer|reason|difference|problem|question|catch|upshot|takeaway|bottom line)\\?\\s", "why": "self-posed question-and-answer; a generated rhetorical beat", "fix": "state the answer as a sentence"},
+  {"id": "false-suspense", "severity": "major", "pattern": "\\bhere(?:'s|\\u2019s| is) (?:the thing|where it gets|the kicker|the catch|the best part)\\b|\\bbut (?:here'?s|there'?s) the (?:thing|catch|rub)\\b|\\bwait,? (?:there'?s|it gets)\\b", "why": "manufactured suspense in a document the reader is scanning", "fix": "delete; lead with the fact"},
+  {"id": "countdown-negation", "severity": "major", "pattern": "\\bNot [^.\\n]{1,40}\\. Not [^.\\n]{1,40}\\. (?:Just|Only|Simply) ", "why": "the Not-X-Not-Y-just-Z cadence", "fix": "one sentence stating what it is"},
+  {"id": "inflated-copula", "severity": "major", "pattern": "\\b(?:serves|stands|functions|acts|operates|exists) as an?(?! long\\b| if\\b| though\\b)\\b|\\bis a testament to\\b|\\bstands as an?\\b", "why": "a weak copula dressed up; usually 'is' or a real verb", "fix": "use the concrete verb"},
+  {"id": "participial-editorial", "severity": "major", "pattern": ",\\s*(?:thereby\\s+)?(?:highlighting|underscoring|emphasizing|showcasing|illustrating|reinforcing|solidifying|cementing|signaling|underlining|exemplifying|paving the way|setting the stage|ushering in|marking a)\\b", "why": "trailing participial clause that editorializes rather than informs; present participial clauses are elevated in LLM text (see research-basis.md). Verbs that commonly do real work in a trailing clause -- allowing, enabling, ensuring, causing -- are deliberately excluded: calibration showed them in legitimate pre-LLM prose.", "fix": "make it its own sentence, or delete the editorial"},
+  {"id": "listicle-preview", "severity": "major", "pattern": "\\bin this (?:article|post|guide|blog|section|chapter|document|tutorial),? (?:we(?:'ll| will|\\u2019ll)|you(?:'ll| will|\\u2019ll)|i(?:'ll| will|\\u2019ll)|let(?:'s|\\u2019s))\\b|\\bwe(?:'ll| will|\\u2019ll) (?:explore|cover|dive into|take a look at|walk through) (?:the|how|what|why)\\b", "why": "table-of-contents narration; headings already do this", "fix": "delete; let the headings carry the structure"},
+  {"id": "essay-closer", "severity": "major", "pattern": "\\bin conclusion\\b|\\bto (?:sum up|summarize)\\b|\\bin summary,\\b|\\ball in all\\b|\\bat the end of the day\\b|\\bonly time will tell\\b|\\bthe (?:possibilities|opportunities) are (?:endless|limitless)\\b", "why": "school-essay sign-off; documentation ends at the last fact", "fix": "end with the result or the next action"},
+  {"id": "audience-triad", "severity": "major", "pattern": "\\bwhether you(?:'re| are|\\u2019re) an? [^.,]{2,40},? (?:an?|or) [^.,]{2,40},? or\\b|\\bfrom (?:beginners?|novices?) to (?:experts?|professionals?|veterans?)\\b", "why": "audience-flattering enumeration; classic generated opener", "fix": "address the one reader this page is for"},
+  {"id": "blog-energy", "severity": "major", "pattern": "\\blet(?:'s|\\u2019s) (?:dive|delve|jump|get) (?:in|into|deeper|started)\\b|\\bwithout further ado\\b|\\blook no further\\b|\\bbuckle up\\b|\\bthat(?:'s|\\u2019s) where [a-z]{2,20} comes in\\b|\\bbut wait,? there(?:'s|\\u2019s) more\\b", "why": "marketing-blog register", "fix": "delete"},
+  {"id": "vague-quantifier", "severity": "minor", "pattern": "\\ba (?:wide|broad|vast|diverse|rich) (?:range|variety|array|selection) of\\b|\\ba (?:myriad|plethora|multitude) of\\b|\\bcountless\\b|\\ba host of\\b", "why": "gestures at quantity instead of giving it", "fix": "give the number, or three examples"},
+  {"id": "unlock-potential", "severity": "major", "pattern": "\\bunlock(?:s|ing)? the (?:power|potential|full potential|secrets|value) of\\b|\\btake [^.]{1,30} to the next level\\b|\\bharness(?:es|ing)? the (?:power|full power) of\\b|\\bsupercharge\\b|\\bgame[- ]chang(?:er|ing)\\b", "why": "advertising copy", "fix": "state the concrete capability and its limit"},
+  {"id": "empty-transition", "severity": "minor", "pattern": "\\bwhen it comes to\\b|\\bin the realm of\\b|\\bin the world of\\b|\\bneedless to say\\b|\\bit goes without saying\\b|\\bthat being said\\b", "why": "connective filler", "fix": "delete, or use the concrete relationship"},
+  {"id": "consensus-claim", "severity": "minor", "pattern": "\\bfew would (?:disagree|argue|deny)\\b|\\bit(?:'s| is|\\u2019s) (?:widely|generally|universally) (?:known|accepted|agreed|understood)\\b|\\bmost (?:experts|developers|engineers) (?:agree|would agree)\\b", "why": "unsupported appeal to consensus", "fix": "cite it or drop it"},
+  {"id": "best-practice", "severity": "minor", "pattern": "\\bbest practices?\\b(?!\\s*(?:document|guide|doc)\\b)|\\bindustry[- ]standard\\b|\\bstate[- ]of[- ]the[- ]art\\b|\\bcutting[- ]edge\\b", "why": "appeals to authority without naming the practice", "fix": "name the practice and who recommends it"},
+  {"id": "each-with-own", "severity": "minor", "pattern": "\\beach with (?:its|their) own\\b|\\bcomes? with (?:its|their) own set of\\b|\\ba double[- ]edged sword\\b", "why": "elaboration that promises specifics and never delivers", "fix": "name the differences, or cut"}
+ ],
+
+ "hedges": [
+  "may", "might", "could", "possibly", "potentially", "perhaps", "arguably",
+  "generally", "typically", "usually", "often", "somewhat", "relatively",
+  "fairly", "quite", "rather", "seemingly", "apparently", "likely",
+  "in some cases", "to some extent", "in many ways"
+ ],
+
+ "transition_openers": [
+  "moreover", "furthermore", "additionally", "in addition", "on the other hand",
+  "that being said", "with that said", "that said", "as such", "consequently",
+  "in essence", "in short", "overall", "nevertheless", "nonetheless",
+  "ultimately", "importantly", "notably", "interestingly", "crucially",
+  "firstly", "secondly", "thirdly", "lastly", "in conclusion", "in summary",
+  "to that end", "by the same token"
+ ],
+
+ "intensifiers": [
+  "very", "really", "truly", "actually", "literally", "incredibly",
+  "extremely", "highly", "deeply", "profoundly", "utterly", "absolutely",
+  "fundamentally", "essentially", "significantly", "substantially", "vastly"
+ ]
+}
