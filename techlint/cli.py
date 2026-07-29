@@ -18,7 +18,7 @@ from . import __version__
 from .baseline import DEFAULT_NAME, Baseline
 from .config import Config
 from .engine import aggregate, lint_file, lint_text
-from .finding import Severity
+from .finding import Axis, Severity
 
 COLORS = {
     Severity.BLOCKER: "\033[1;31m",
@@ -64,6 +64,10 @@ RULE_DOCS = {
     "STAT-STALL": "Adjacent paragraphs share most content words; the second may restate.",
     "STAT-ECHO": "A long phrase repeated within the document.",
     "STAT-ABSTRACT": "Long, abstract sentence with few new content words (the bits test).",
+    "AI-LINK": "A relative link or heading anchor that does not resolve. Generated docs "
+               "routinely cite files and sections that were never written.",
+    "AI-PROSE-RATIO": "Most of the document is tables, bullets, and headings rather than "
+                      "prose — scaffolding standing in for explanation.",
 }
 
 DOC_GLOBS = ("*.md", "*.markdown", "*.txt", "*.rst")
@@ -256,6 +260,19 @@ def _print_summary(reports, total, color: bool):
     cts = total["counts"]
     line = ", ".join(f"{n} {s}" for s, n in cts.items() if n) or "no findings"
     print(f"{total['files']} file(s), {total['words']} words: {line}")
+
+    axes = total.get("axes") or {}
+    if any(axes.values()):
+        print()
+        width = max(len(a) for a in Axis.ALL)
+        for name in Axis.ALL:
+            score = axes.get(name, 0.0)
+            if not score:
+                continue
+            bar = "█" * min(30, max(1, round(score * 30 / max(total["wscore"], 1))))
+            print(f"  {name:<{width}}  {score:6.2f}  {bar}  {Axis.ADVICE[name]}")
+        print()
+
     print(f"weighted score {c(BOLD, total['wscore'])}/1k words — "
           f"{c(BOLD, total['verdict'])}"
           + (f" ({total['suppressed']} suppressed by baseline)"

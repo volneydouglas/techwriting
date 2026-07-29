@@ -129,8 +129,22 @@ error handling" → *which* failure does it survive? "Seamless integration" →
 | `AI-BOLDLIST` | runs of `**Term:** one clause.` — performs organization while each item stays too thin to use |
 | `AI-UNIFORM` | low sentence-length variance (burstiness) |
 | `AI-COPULA` | the copula daisy-chain — zero occurrences in ~1M words of human prose |
+| `AI-PROSE-RATIO` | most of the document is tables and bullets rather than prose |
 | `STAT-STALL` | adjacent paragraphs restating one idea |
 | `STAT-ABSTRACT` | long, abstract sentences carrying few new facts |
+
+## Layer 4b — References that do not exist (`AI-LINK`)
+
+The one part of the semantic layer that *is* checkable. Generated
+documentation links confidently to files and sections nobody wrote:
+
+- a relative link to `setup.md` when no such file exists
+- an anchor `#configuration` when the document has no such heading
+- a cross-file anchor where the file is real and the section is not
+
+This is the prose form of a hallucinated import, and it is worth more than any
+vocabulary check because it is unambiguous: the target either resolves or it
+does not. External URLs are not checked — that needs the network.
 
 ## Layer 5 — Semantic (manual; the ones that matter most)
 

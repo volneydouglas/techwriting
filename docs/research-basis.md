@@ -57,6 +57,32 @@ Relevant reading: *Linguistic Characteristics of AI-Generated Text: A Survey*
 (arXiv:2509.10179); *Explaining Generalization of AI-Generated Text Detectors
 Through Linguistic Analysis* (arXiv:2601.07974).
 
+### Reference validation, from sloppylint
+
+[sloppylint](https://github.com/rsionnach/sloppylint) detects AI slop in Python
+*code*, and its best idea transfers directly: it validates that imported
+packages actually exist, because a
+[USENIX study](https://arxiv.org/abs/2406.10279) found roughly a fifth of
+AI-suggested imports name packages that do not.
+
+Prose has the same failure mode in a different costume — generated
+documentation confidently links to files, sections, and anchors that were never
+written. `AI-LINK` checks relative link targets against the filesystem and
+heading anchors against the actual headings. Offline, deterministic, no
+dependencies. External URLs are deliberately out of scope: checking them needs
+the network and turns every CI run into someone else's uptime problem.
+
+Two other ideas came from the same project:
+
+- **Axis breakdown.** sloppylint splits its score into noise / lies / style /
+  structure rather than reporting one number. techlint's equivalent —
+  fabrication / filler / clarity / structure — says what *kind* of editing a
+  document needs, not just how much.
+- **`AI-PROSE-RATIO`.** Found by running techlint against sloppylint's own
+  README: of 297 lines, only 254 words were prose; the rest was tables, badges,
+  and bullets. A document built almost entirely from scaffolding performs
+  organization while escaping prose analysis entirely.
+
 ### Patterns from the prose-smells project
 
 The copula daisy-chain, countdown negation, self-posed Q&A, inflated copula,

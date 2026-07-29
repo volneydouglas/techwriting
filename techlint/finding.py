@@ -29,6 +29,58 @@ class Severity:
     ALL = [BLOCKER, MAJOR, MINOR, INFO]
 
 
+class Axis:
+    """What *kind* of editing a finding calls for.
+
+    One total score tells you a document needs work; it does not tell you what
+    work. Splitting the score by axis does: a document heavy on FABRICATION
+    needs fact-checking, one heavy on FILLER needs cutting, one heavy on
+    STRUCTURE needs reorganizing. (Idea borrowed from the sloppylint project,
+    which splits its code-slop score into noise/lies/style/structure.)
+    """
+
+    FABRICATION = "fabrication"   # claims and references that may not be real
+    FILLER = "filler"             # words that carry no information
+    CLARITY = "clarity"           # constructions that cost the reader
+    STRUCTURE = "structure"       # shape and rhythm of the document
+
+    ALL = [FABRICATION, FILLER, CLARITY, STRUCTURE]
+
+    BY_RULE = {
+        "AI-ARTIFACT": FABRICATION,
+        "AI-LINK": FABRICATION,
+        "AI-VOCAB": FILLER,
+        "AI-VOCAB-DENSITY": FILLER,
+        "AI-PHRASE": FILLER,
+        "AI-HEDGE": FILLER,
+        "AI-INTENSIFY": FILLER,
+        "STAT-STALL": FILLER,
+        "STAT-ECHO": FILLER,
+        "STAT-ABSTRACT": FILLER,
+        "AI-COPULA": STRUCTURE,
+        "AI-DASH": STRUCTURE,
+        "AI-TRIAD": STRUCTURE,
+        "AI-OPENER": STRUCTURE,
+        "AI-BOLDLIST": STRUCTURE,
+        "AI-UNIFORM": STRUCTURE,
+        "AI-EMOJI": STRUCTURE,
+        "AI-PROSE-RATIO": STRUCTURE,
+    }
+
+    ADVICE = {
+        FABRICATION: "verify these against reality before shipping",
+        FILLER: "cut; the sentences work without them",
+        CLARITY: "rewrite for the reader's working memory",
+        STRUCTURE: "reorganize; the shape is doing the talking",
+    }
+
+    @classmethod
+    def of(cls, rule: str) -> str:
+        if rule in cls.BY_RULE:
+            return cls.BY_RULE[rule]
+        return cls.CLARITY if rule.startswith("CLARITY-") else cls.STRUCTURE
+
+
 @dataclass
 class Finding:
     rule: str            # e.g. "AI-VOCAB", "CLARITY-NOMINAL"
@@ -42,6 +94,10 @@ class Finding:
     why: str = ""        # evidence: why this is a signal (citation or rate)
     meta: dict = field(default_factory=dict)
 
+    @property
+    def axis(self) -> str:
+        return Axis.of(self.rule)
+
     def baseline_key(self):
         """Identity used by the suppression baseline: rule + file + quote."""
         return (self.rule, self.path, self.extract)
@@ -50,6 +106,7 @@ class Finding:
         d = {
             "rule": self.rule,
             "severity": self.severity,
+            "axis": self.axis,
             "message": self.message,
             "line": self.line,
             "col": self.col,
@@ -76,3 +133,13 @@ def counts(findings) -> dict:
     for f in findings:
         out[f.severity] += 1
     return out
+
+
+def axis_scores(findings, words: int) -> dict:
+    """Weighted score per axis, so the number says what kind of edit is needed."""
+    out = {a: 0.0 for a in Axis.ALL}
+    if words <= 0:
+        return out
+    for f in findings:
+        out[f.axis] += Severity.WEIGHT[f.severity]
+    return {a: round(v / words * 1000, 2) for a, v in out.items()}

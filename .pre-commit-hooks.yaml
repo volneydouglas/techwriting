@@ -1,0 +1,15 @@
+- id: techlint
+  name: techlint
+  description: Lint technical writing for AI tics and clarity defects.
+  entry: techlint
+  language: python
+  types_or: [markdown, plain-text, rst]
+  args: ["--format", "text"]
+
+- id: techlint-gate
+  name: techlint (score gate)
+  description: Fail when the weighted score exceeds the threshold.
+  entry: techlint
+  language: python
+  types_or: [markdown, plain-text, rst]
+  args: ["--gate", "5.0", "--fail-on", "never"]

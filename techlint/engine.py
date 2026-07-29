@@ -5,8 +5,9 @@ from pathlib import Path
 from .baseline import Baseline
 from .checks_ai import AI_CHECKS
 from .checks_clarity import CLARITY_CHECKS
+from .checks_links import LINK_CHECKS
 from .config import Config
-from .finding import Severity, counts, weighted_score
+from .finding import Axis, Severity, axis_scores, counts, weighted_score
 from .stats import STAT_CHECKS
 from .textmodel import parse
 
@@ -16,7 +17,7 @@ def batteries(config: Config):
     if config.enable_clarity:
         checks += CLARITY_CHECKS
     if config.enable_ai:
-        checks += AI_CHECKS
+        checks += AI_CHECKS + LINK_CHECKS
     if config.enable_stats:
         checks += STAT_CHECKS
     return checks
@@ -46,6 +47,7 @@ def lint_text(text: str, path: str = "", config: Config = None,
         "words": words,
         "counts": counts(findings),
         "wscore": weighted_score(findings, words),
+        "axes": axis_scores(findings, words),
         "suppressed": len(suppressed),
         "verdict": verdict(weighted_score(findings, words)),
     }
@@ -84,11 +86,17 @@ def aggregate(reports) -> dict:
     total = {s: sum(r["counts"][s] for r in reports) for s in Severity.ALL}
     weight = sum(Severity.WEIGHT[s] * n for s, n in total.items())
     wscore = round(weight / words * 1000, 2) if words else 0.0
+    axes = {a: 0.0 for a in Axis.ALL}
+    for r in reports:
+        for a, v in r.get("axes", {}).items():
+            axes[a] += v * r["words"]
+    axes = {a: round(v / words, 2) if words else 0.0 for a, v in axes.items()}
     return {
         "files": len(reports),
         "words": words,
         "counts": total,
         "wscore": wscore,
+        "axes": axes,
         "verdict": verdict(wscore),
         "suppressed": sum(r["suppressed"] for r in reports),
     }

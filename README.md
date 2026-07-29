@@ -83,6 +83,10 @@ exempt from prose budgets; each list item is its own sentence.
 
 ## What it checks
 
+**Reference validation** — `AI-LINK` checks that relative links resolve and
+heading anchors exist. This is the prose form of a hallucinated import: the
+target either resolves or it does not. Offline, no network.
+
 **AI tics** ([catalog](docs/ai-tics.md)) — four layers by confidence:
 `AI-ARTIFACT` (blocker: chat frames, unfilled placeholders, appeals to unnamed
 studies) · `AI-COPULA` (blocker: the copula daisy-chain, zero occurrences in
@@ -113,6 +117,18 @@ wscore = (3.0*blocker + 1.5*major + 0.5*minor) / words * 1000
 
 Bands are anchored to the calibration corpus: `clean` < 4 · `light` < 10 ·
 `moderate` < 25 · `heavy` ≥ 25.
+
+The score also splits by **axis**, because one number tells you a document
+needs work but not what work:
+
+```
+  filler        38.46  ███████████████████████  cut; the sentences work without them
+  clarity        8.88  █████  rewrite for the reader's working memory
+  structure      2.96  ██  reorganize; the shape is doing the talking
+```
+
+`fabrication` means fact-check it · `filler` means cut · `clarity` means
+rewrite · `structure` means reorganize.
 
 ## Configuration
 
@@ -153,6 +169,16 @@ test, re-run calibration.
 - run: techlint --format github --gate 5.0 docs/
 ```
 
+Or as a pre-commit hook:
+
+```yaml
+repos:
+  - repo: https://github.com/volneydouglas/techwriting
+    rev: v0.2.0
+    hooks:
+      - id: techlint
+```
+
 ## Layout
 
 ```
@@ -181,7 +207,10 @@ agree with them.
 
 The severity model, suppression baseline, exemption taxonomy, and calibration
 discipline are adapted from two sibling projects that apply the same
-code-smell framing to fiction. One idea inverts on the way across: in fiction a
+code-smell framing to fiction. Reference validation, the axis breakdown, and
+the scaffolding-ratio check come from
+[sloppylint](https://github.com/rsionnach/sloppylint), which does the
+equivalent job for Python code. One idea inverts on the way across: in fiction a
 repeated distinctive word is a defect, while in technical writing terminology
 consistency *requires* repetition — varying your term is the bug.
 
