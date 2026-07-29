@@ -148,10 +148,17 @@ budgets:
   em_dash_per_1k: 10
 style:
   contractions: allow    # Google's guide allows them
+exclude:                 # on top of vendor/build dirs, always skipped
+  - generated-*
 domain_vocabulary:       # never flagged as AI vocabulary
   - harness              # the test harness this project documents
   - realm                # Kerberos realm
 ```
+
+`techlint .` walks directories recursively, skipping `node_modules`, `.venv`,
+`build`, `dist`, `target`, and other vendor and build directories by default.
+A file named explicitly on the command line is always linted, even inside an
+excluded directory.
 
 ## Handling false positives
 

@@ -10,14 +10,22 @@ readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "MIT" }
 keywords = ["technical-writing", "linter", "ai-detection", "llm", "style", "documentation"]
+authors = [{ name = "volneydouglas" }]
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 5 - Production/Stable",
+    "License :: OSI Approved :: MIT License",
     "Environment :: Console",
     "Intended Audience :: Developers",
     "Topic :: Documentation",
     "Topic :: Text Processing :: Linguistic",
     "Programming Language :: Python :: 3",
 ]
+
+[project.urls]
+Homepage = "https://github.com/volneydouglas/techwriting"
+Repository = "https://github.com/volneydouglas/techwriting"
+Issues = "https://github.com/volneydouglas/techwriting/issues"
+Changelog = "https://github.com/volneydouglas/techwriting/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
 dev = ["pytest>=7"]

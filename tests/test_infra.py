@@ -5,6 +5,7 @@ import subprocess
 import sys
 
 import pytest
+from pathlib import Path
 
 from techlint import Baseline, Config, lint_text
 from techlint.config import _parse_yaml
@@ -228,3 +229,59 @@ class TestCli:
         r = run(str(tmp_path), "--no-config", "--no-baseline",
                 "--format", "json", "--fail-on", "never")
         assert json.loads(r.stdout)["summary"]["files"] == 2
+
+
+class TestPathCollection:
+    """`techlint .` must not walk into vendor and build directories."""
+
+    def _tree(self, tmp_path):
+        for rel in ("README.md",
+                    "docs/guide.md",
+                    "node_modules/pkg/README.md",
+                    ".venv/lib/doc.md",
+                    "build/out.md",
+                    "dist/x.md",
+                    "target/y.md",
+                    "__pycache__/z.md",
+                    "vendor/v.md"):
+            p = tmp_path / rel
+            p.parent.mkdir(parents=True, exist_ok=True)
+            p.write_text("# heading\n")
+        return tmp_path
+
+    def test_vendor_dirs_skipped(self, tmp_path):
+        from techlint.cli import collect
+        root = self._tree(tmp_path)
+        found = {str(Path(f).relative_to(root)) for f in collect([str(root)], Config())}
+        assert found == {"README.md", "docs/guide.md"}
+
+    def test_without_config_nothing_is_skipped(self, tmp_path):
+        from techlint.cli import collect
+        root = self._tree(tmp_path)
+        assert len(collect([str(root)])) > 2
+
+    def test_custom_exclude_pattern(self, tmp_path):
+        from techlint.cli import collect
+        root = self._tree(tmp_path)
+        found = collect([str(root)], Config(exclude=["docs"]))
+        assert all("docs" not in f for f in found)
+
+    def test_glob_exclude_pattern(self, tmp_path):
+        from techlint.cli import collect
+        (tmp_path / "generated-api.md").write_text("# x\n")
+        (tmp_path / "handwritten.md").write_text("# x\n")
+        found = collect([str(tmp_path)], Config(exclude=["generated-*"]))
+        assert len(found) == 1 and found[0].endswith("handwritten.md")
+
+    def test_explicit_file_beats_exclude(self, tmp_path):
+        from techlint.cli import collect
+        root = self._tree(tmp_path)
+        target = str(root / "node_modules" / "pkg" / "README.md")
+        assert collect([target], Config()) == [target]
+
+    def test_no_duplicates_across_globs(self, tmp_path):
+        from techlint.cli import collect
+        (tmp_path / "a.md").write_text("# x\n")
+        (tmp_path / "b.txt").write_text("x\n")
+        found = collect([str(tmp_path)], Config())
+        assert len(found) == len(set(found)) == 2

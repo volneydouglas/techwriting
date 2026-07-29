@@ -41,6 +41,20 @@ from pathlib import Path
 
 CONFIG_NAMES = ["techlint.yaml", "techlint.yml", "techlint.json", ".techlint.yaml"]
 
+# Directories never walked when a path expands to a tree. Without this,
+# `techlint .` in any real project reads every README in node_modules.
+# Extend per project with `exclude:` in techlint.yaml; these defaults always
+# apply on top of whatever you add.
+DEFAULT_EXCLUDES = [
+    "node_modules", "vendor", "vendored", "third_party", "thirdparty",
+    ".venv", "venv", "env", ".env", "virtualenv",
+    "site-packages", "dist-packages", "__pycache__", ".tox", ".nox",
+    "build", "dist", "target", "out", "_build", ".next", ".nuxt",
+    ".git", ".hg", ".svn", ".cache", ".mypy_cache", ".pytest_cache",
+    ".ruff_cache", "htmlcov", "coverage", ".idea", ".vscode",
+    "bower_components", "jspm_packages", "Pods", ".terraform",
+]
+
 MODE_DEFAULTS = {
     # mode          sentence_words  paragraph_sentences
     "procedure":   (20, 6),    # instructions: one action, short
@@ -57,6 +71,7 @@ class Config:
     style: dict = field(default_factory=dict)
     domain_vocabulary: set = field(default_factory=set)
     disable: set = field(default_factory=set)
+    exclude: list = field(default_factory=list)
     enable_ai: bool = True
     enable_clarity: bool = True
     enable_stats: bool = True
@@ -89,6 +104,25 @@ class Config:
 
     def is_domain_word(self, word: str) -> bool:
         return word.lower() in self.domain_vocabulary
+
+    def excluded(self, path) -> bool:
+        """True if any path component matches an exclude pattern.
+
+        Patterns are matched against directory and file names, not full paths,
+        and support globs: `exclude: ["generated-*", "*.min.md"]`.
+        """
+        import fnmatch
+        from pathlib import Path
+
+        parts = Path(path).parts
+        patterns = [*DEFAULT_EXCLUDES, *self.exclude]
+        for part in parts:
+            if part.startswith(".") and part not in (".", ".."):
+                return True
+            for pat in patterns:
+                if fnmatch.fnmatch(part, pat):
+                    return True
+        return False
 
     # -- loading ----------------------------------------------------------
     @classmethod

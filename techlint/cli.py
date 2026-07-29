@@ -9,7 +9,6 @@
 """
 
 import argparse
-import fnmatch
 import json
 import sys
 from pathlib import Path
@@ -110,17 +109,31 @@ def build_parser():
     return p
 
 
-def collect(paths):
-    out = []
+def collect(paths, config=None):
+    """Expand paths to documents.
+
+    Directories are walked recursively for DOC_GLOBS, skipping vendor, build,
+    and dot directories (see config.DEFAULT_EXCLUDES). Files named explicitly
+    on the command line are always linted, even inside an excluded directory --
+    an exclude list should filter a sweep, not override an instruction.
+    """
+    out, seen = [], set()
     for raw in paths:
         p = Path(raw)
         if raw == "-":
             out.append(raw)
         elif p.is_dir():
+            found = []
             for g in DOC_GLOBS:
-                out.extend(sorted(str(x) for x in p.rglob(g)
-                                  if not any(fnmatch.fnmatch(part, ".*")
-                                             for part in x.parts)))
+                found.extend(p.rglob(g))
+            for x in sorted(found):
+                rel = x.relative_to(p) if p != Path(".") else x
+                if config and config.excluded(rel):
+                    continue
+                s = str(x)
+                if s not in seen:
+                    seen.add(s)
+                    out.append(s)
         else:
             out.append(str(p))
     return out
@@ -169,7 +182,7 @@ def main(argv=None) -> int:
         print(f"techlint: {e}", file=sys.stderr)
         return 2
 
-    files = collect(args.paths)
+    files = collect(args.paths, config)
     if not files:
         print("techlint: no documents found", file=sys.stderr)
         return 2

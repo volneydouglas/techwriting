@@ -18,6 +18,13 @@ style:
   # docs/ai-tics.md scores 98.7 for specimens it is naming on purpose.
   quoted_specimens: skip
 
+# Directories and files to skip when a path expands to a tree. Vendor and
+# build directories (node_modules, .venv, dist, target, ...) are always
+# skipped; this list adds project-specific ones.
+exclude:
+  - corpus               # benchmarks/corpus: fetched third-party texts
+  - known_bad.md         # the deliberately slop-dense calibration fixture
+
 # Exemption 3 (literal usage), declared once instead of baselined per hit.
 # Words this project uses in their literal technical sense, which the AI
 # vocabulary check must never flag.

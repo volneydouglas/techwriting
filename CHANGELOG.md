@@ -72,7 +72,7 @@ reason.
 
 `techlint` CLI with text, JSON, GitHub-annotation, and summary output;
 `--gate` for CI; `--explain` for any rule; per-project `techlint.yaml`; a
-pre-commit hook. Python ≥ 3.9, no runtime dependencies. 123 tests.
+pre-commit hook. Python ≥ 3.9, no runtime dependencies. 129 tests.
 
 ### Prior history
 
