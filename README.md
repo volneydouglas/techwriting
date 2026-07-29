@@ -9,18 +9,24 @@ this" — nothing can answer that reliably. What it measures is a defect worth
 fixing regardless of authorship.
 
 ```
-$ techlint docs/
-docs/guide.md:3:1 major AI-PHRASE Stock construction: "In today's fast-paced digital landscape".
-    fix: delete the clause; start at the point
-    why: generic scene-setting that carries no information
-docs/guide.md:6:50 major AI-VOCAB "intricacies" is 10.25x more frequent in post-LLM text than the pre-LLM trend predicts.
-    fix: plainer: "details"
-    why: excess ratio 10.25 (strong tier), Kobak et al. 2025, 15M PubMed abstracts
-docs/guide.md:11:51 minor CLARITY-PASSIVE Obligation with no actor: "should be disconnected" — who does this?
-    fix: use the imperative ("Disconnect the …") or name the actor
+$ techlint examples/before.md
+examples/before.md:3:45 major AI-PHRASE Stock construction: "it's important to note that".
+    fix: delete it and state the point
+    why: pure preamble; the sentence works without it
+examples/before.md:4:13 major AI-PHRASE Stock construction: "plays a crucial role".
+    fix: say what it does, or give the consequence of not doing it
+    why: asserts importance instead of stating what the thing does
+examples/before.md:6:35 major AI-VOCAB "delve" is 7.91x more frequent in post-LLM text than the pre-LLM trend predicts.
+    fix: plainer: "examine"
+    why: excess ratio 7.91 (strong tier), Kobak et al. 2025, 15M PubMed abstracts
 
-1 file(s), 169 words: 4 major, 7 minor, 7 info
-weighted score 56.21/1k words — heavy
+1 file(s), 169 words: 4 major, 5 minor, 3 info
+
+  filler        38.46  ███████████████████████  cut; the sentences work without them
+  clarity        8.88  █████  rewrite for the reader's working memory
+  structure      2.96  ██  reorganize; the shape is doing the talking
+
+weighted score 50.3/1k words — heavy
 ```
 
 ## Why the numbers mean something
@@ -174,7 +180,7 @@ Or as a pre-commit hook:
 ```yaml
 repos:
   - repo: https://github.com/volneydouglas/techwriting
-    rev: v0.2.0
+    rev: v1.0.0
     hooks:
       - id: techlint
 ```
@@ -185,6 +191,7 @@ repos:
 techlint/            the linter (stdlib only)
   checks_ai.py       AI tic battery, tiered by measured effect size
   checks_clarity.py  clarity rules with multi-authority backing
+  checks_links.py    reference validation + scaffolding ratio
   stats.py           distribution instruments
   config.py          per-project config; the framework ships no domain knowledge
   baseline.py        suppression baseline with mandatory reasons
@@ -218,7 +225,6 @@ Full citations: [docs/research-basis.md](docs/research-basis.md).
 
 ## License
 
-MIT. The excess-vocabulary data derives from
-`github.com/berenslab/llm-excess-vocab` (MIT). ASD-STE100 is copyright ASD and
-free to obtain from [asd-ste100.org](https://www.asd-ste100.org); no text from
-it ships here.
+MIT — see [LICENSE](LICENSE). Third-party attribution for the
+excess-vocabulary data, the calibration corpus, and the borrowed ideas is in
+[NOTICE](NOTICE). Release notes: [CHANGELOG.md](CHANGELOG.md).

@@ -1,0 +1,56 @@
+techlint — third-party attribution
+==================================
+
+techlint is MIT licensed; see LICENSE.
+
+Excess-vocabulary data
+----------------------
+
+`techlint/data/ai_excess_vocab.json` is derived from the dataset published
+with:
+
+    Kobak D., González-Márquez R., Horvát E.-Á., Lause J. (2025).
+    "Delving into LLM-assisted writing in biomedical publications through
+    excess vocabulary." Science Advances 11(30).
+
+Source data: https://github.com/berenslab/llm-excess-vocab — MIT License.
+
+techlint reproduces the paper's counterfactual (a linear extrapolation of the
+2021→2022 frequency trend into 2024) to compute a per-word excess ratio, then
+tiers the words by effect size. The regeneration script is
+`tools/build_excess_vocab.py`.
+
+Calibration corpus
+------------------
+
+`benchmarks/fetch.py` downloads IETF RFCs and Python PEPs at build time. These
+texts are not redistributed here — `benchmarks/corpus/` is gitignored. RFCs are
+published under the IETF Trust Legal Provisions; PEPs are placed in the public
+domain or licensed under CC0 by their authors.
+
+ASD-STE100
+----------
+
+Earlier versions of this project implemented ASD-STE100 (Simplified Technical
+English) directly. That layer was removed; see `docs/removed-rules.md`.
+
+ASD-STE100 is copyright ASD (AeroSpace, Security and Defence Industries
+Association of Europe) and is free to obtain from https://www.asd-ste100.org.
+No text or data from that specification is distributed in this repository. The
+handful of surviving rules that ASD-STE100 also happens to recommend are
+included because independent authorities (Google, Microsoft, the Federal Plain
+Language Guidelines, RFC 2119, Gopen & Swan) recommend them as well; each is
+cited in `docs/research-basis.md`.
+
+Ideas
+-----
+
+The severity model, weighted score, suppression baseline, exemption taxonomy,
+and calibration discipline are adapted from two sibling projects that apply the
+same code-smell framing to fiction.
+
+Reference validation, the axis breakdown, and the scaffolding-ratio check are
+adapted from sloppylint (https://github.com/rsionnach/sloppylint), MIT
+licensed, which performs the equivalent job for Python code.
+
+No code from any of these projects is included; the debt is conceptual.

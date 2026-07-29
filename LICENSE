@@ -19,19 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-THIRD-PARTY DATA
-
-techlint/data/ai_excess_vocab.json is derived from the dataset published with:
-
-  Kobak D., González-Márquez R., Horvát E.-Á., Lause J. (2025).
-  "Delving into LLM-assisted writing in biomedical publications through
-  excess vocabulary." Science Advances 11(30).
-  https://github.com/berenslab/llm-excess-vocab — MIT License.
-
-ASD-STE100 (Simplified Technical English) is copyright ASD (AeroSpace,
-Security and Defence Industries Association of Europe) and is free to obtain
-from https://www.asd-ste100.org. No text or data from that specification is
-distributed in this repository.
