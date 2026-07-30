@@ -8,7 +8,7 @@ import pytest
 from pathlib import Path
 
 from techlint import Baseline, Config, lint_text
-from techlint.config import _parse_yaml
+from techlint.config import _parse_yaml, _parse_yaml_fallback
 from techlint.engine import aggregate, verdict
 from techlint.finding import Finding, Severity, weighted_score
 
@@ -94,7 +94,10 @@ class TestConfig:
             Config.load(p)
 
     def test_yaml_subset_parser(self):
-        data = _parse_yaml(
+        # Call the fallback directly: _parse_yaml prefers PyYAML when it is
+        # installed, so going through it tests PyYAML on some machines and
+        # this parser on others. CI's first release run caught exactly that.
+        data = _parse_yaml_fallback(
             "mode: procedure\n"
             "locale: us\n"
             "budgets:\n"
@@ -105,6 +108,29 @@ class TestConfig:
         assert data["mode"] == "procedure"
         assert data["budgets"]["sentence_words"] == 18
         assert data["domain_vocabulary"] == ["harness", "realm"]
+
+    def test_fallback_and_pyyaml_agree(self):
+        text = ("mode: procedure\n"
+                "budgets:\n"
+                "  sentence_words: 18\n"
+                "  grade_level: 12\n"
+                "bands:\n"
+                "  light: 5\n"
+                "exclude:\n"
+                "  - generated-*\n"
+                "domain_vocabulary:\n"
+                "  - harness\n"
+                "style:\n"
+                "  contractions: flag\n")
+        fallback = _parse_yaml_fallback(text)
+        assert fallback["domain_vocabulary"] == ["harness"]
+        assert fallback["exclude"] == ["generated-*"]
+        assert fallback["budgets"]["grade_level"] == 12
+        try:
+            import yaml
+        except ImportError:
+            return
+        assert fallback == yaml.safe_load(text)
 
     def test_yaml_file_load(self, tmp_path):
         p = tmp_path / "techlint.yaml"

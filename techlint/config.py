@@ -159,14 +159,23 @@ class Config:
 # -- minimal YAML subset ---------------------------------------------------
 
 def _parse_yaml(text: str):
-    """Handles the shapes used by techlint.yaml: nested maps of scalars and
-    lists of scalars, two-space indented. Falls back to PyYAML if installed."""
+    """Parse techlint.yaml: PyYAML when installed, else the subset parser."""
     try:
         import yaml  # noqa: PLC0415
         return yaml.safe_load(text)
     except ImportError:
-        pass
+        return _parse_yaml_fallback(text)
 
+
+def _parse_yaml_fallback(text: str):
+    """Subset parser for the shapes techlint.yaml uses: nested maps of
+    scalars and lists of scalars, two-space indented.
+
+    Kept separate from _parse_yaml so tests exercise it directly. The release
+    pipeline's first run caught a list-parsing bug here that local tests
+    missed, because local machines had PyYAML installed and CI did not — the
+    test was accidentally testing PyYAML instead of this code.
+    """
     root = {}
     stack = [(-1, root)]
     for raw in text.splitlines():
@@ -179,7 +188,11 @@ def _parse_yaml(text: str):
             stack.pop()
         parent = stack[-1][1]
         if body.startswith("- "):
-            if not isinstance(parent, list):
+            # The parent of a list item is either a real list or a _Pending
+            # container. _Pending subclasses dict, so an isinstance(list)
+            # check here silently dropped every list item — the bug the
+            # release gate caught on its first run.
+            if not hasattr(parent, "append"):
                 continue
             parent.append(_scalar(body[2:].strip()))
             continue
