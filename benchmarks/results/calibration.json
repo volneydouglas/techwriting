@@ -23,10 +23,10 @@
     "blocker": 0,
     "major": 0,
     "minor": 6,
-    "info": 14
+    "info": 15
    },
    "rules_per_1k": {
-    "CLARITY-LENGTH": 6.71,
+    "CLARITY-LENGTH": 7.38,
     "CLARITY-LATIN": 2.68,
     "DOC-CONDESCEND": 2.01,
     "CLARITY-PASSIVE": 1.34,
@@ -67,10 +67,10 @@
     "blocker": 0,
     "major": 0,
     "minor": 28,
-    "info": 35
+    "info": 36
    },
    "rules_per_1k": {
-    "CLARITY-LENGTH": 5.68,
+    "CLARITY-LENGTH": 5.88,
     "DOC-CONDESCEND": 3.45,
     "CLARITY-LATIN": 1.01,
     "DOC-ALLOWS": 0.61,
@@ -238,15 +238,15 @@
   {
    "name": "rfc793_tcp.txt",
    "words": 20973,
-   "wscore": 2.0,
+   "wscore": 2.05,
    "counts": {
     "blocker": 0,
     "major": 6,
-    "minor": 66,
-    "info": 163
+    "minor": 68,
+    "info": 165
    },
    "rules_per_1k": {
-    "CLARITY-LENGTH": 5.24,
+    "CLARITY-LENGTH": 5.44,
     "CLARITY-LATIN": 1.72,
     "CLARITY-PASSIVE": 0.86,
     "DOC-CONDESCEND": 0.57,
@@ -289,9 +289,9 @@
    }
   }
  ],
- "known_good_wscore": 2.12,
+ "known_good_wscore": 2.14,
  "corpus_rule_rates_per_1k": {
-  "CLARITY-LENGTH": 5.38,
+  "CLARITY-LENGTH": 5.48,
   "CLARITY-LATIN": 1.62,
   "DOC-CONDESCEND": 1.35,
   "CLARITY-PASSIVE": 0.76,

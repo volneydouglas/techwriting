@@ -31,6 +31,13 @@ hostile inputs.
 - **Links to repeated headings were false positives.** GitHub suffixes
   duplicate headings (`#setup`, `#setup-1`); the anchor checker now generates
   the same suffixes.
+- **A terminator inside quotes ended the sentence.** Splitting
+  `"Certainly! Here's…"` at the `!` left both fragments with unbalanced
+  quotes, which broke specimen masking downstream. The splitter now tracks
+  quote parity; a stray unbalanced quote affects only its own paragraph. The
+  release gate caught this on CI while a piped local check was reading
+  `tail`'s exit code instead of techlint's — the pipeline was right and the
+  shell habit was wrong.
 
 ### Added
 

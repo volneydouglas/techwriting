@@ -145,14 +145,30 @@ def _clean_inline(line: str, lineno: int):
 
 
 def _split_sentences(text: str, positions: list):
-    """Split cleaned block text into sentences with their position maps."""
+    """Split cleaned block text into sentences with their position maps.
+
+    Terminators inside a quoted span do not end a sentence: splitting
+    '"Certainly! Here\'s..."' at the ! leaves both fragments with unbalanced
+    quotes, which broke specimen masking downstream (bug-hunt 2026-07-30).
+    Straight quotes are tracked by parity, curly quotes by depth; a stray
+    unbalanced quote disables splitting only for the rest of its own block.
+    """
     sentences = []
     start = 0
     i = 0
     n = len(text)
+    dq = 0          # straight double quotes seen so far
+    curly = 0       # “ opens, ” closes
     while i < n:
         ch = text[i]
-        if ch in ".!?":
+        if ch == '"':
+            dq += 1
+        elif ch == "“":
+            curly += 1
+        elif ch == "”":
+            curly = max(0, curly - 1)
+        in_quote = (dq % 2 == 1) or curly > 0
+        if ch in ".!?" and not in_quote:
             # Collect trailing closers like ")" or quotes.
             j = i + 1
             while j < n and text[j] in ")\"'”’]":

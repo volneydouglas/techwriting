@@ -164,3 +164,31 @@ class TestBaselineWildcard:
         p.write_text('{"rule": "AI-DASH", "file": "d.md", "quote": "*", '
                      '"why": "reviewed"}\n')
         assert len(Baseline.load(p).entries) == 1
+
+
+class TestQuoteAwareSentenceSplitting:
+    """Bug 7: a terminator inside a quoted span ended the sentence, leaving
+    both fragments with unbalanced quotes — which silently broke specimen
+    masking downstream. Found because the release gate failed on CI while a
+    piped local check was reading tail's exit code instead of techlint's."""
+
+    SPECIMENS = ('- **Pleasantries**: "I hope this helps", "Great question!", '
+                 '"Certainly! Here\'s...", "Let me know if you\'d like..."')
+
+    def test_quoted_terminator_does_not_split(self):
+        doc = parse(self.SPECIMENS)
+        assert len(doc.sentences) == 1
+
+    def test_masking_covers_specimens_after_internal_bang(self):
+        findings, _s, _r = lint_text(
+            self.SPECIMENS, config=Config(style={"quoted_specimens": "skip"}))
+        assert not [f for f in findings if f.severity == Severity.BLOCKER]
+
+    def test_unquoted_terminators_still_split(self):
+        doc = parse('He said "stop". Then it worked! Really.')
+        assert len(doc.sentences) == 3
+
+    def test_stray_quote_only_affects_its_own_block(self):
+        doc = parse('An unbalanced " quote here\n\nNext paragraph. Two sentences.')
+        texts = [s.text for s in doc.sentences]
+        assert "Next paragraph." in texts and "Two sentences." in texts
