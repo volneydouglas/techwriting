@@ -1,5 +1,48 @@
 # Changelog
 
+## 1.1.1 — 2026-07-30
+
+A bug-hunt release. Six defects found by adversarial review, each fixed with
+a regression test, plus a robustness suite that fuzzes the linter with
+hostile inputs.
+
+### Fixed
+
+- **Misspelled imperatives in suggestions.** `CLARITY-PASSIVE` suggested
+  "Disconnecte the …" and "Adjuste the …": the verb-base heuristic restored a
+  silent *e* onto almost any stem. Rebuilt around English orthography (words
+  do not end in bare v, z, soft c, or u) plus a list of the silent-e verbs
+  common in documentation; a test pins 33 verb forms.
+- **`AI-BOLDLIST` counted bullets inside code fences.** It scanned the raw
+  document; fenced blocks are now stripped first.
+- **Specimen masking ate prose between possessives.** The single-quote
+  pattern treated apostrophes as quote delimiters, so in "the collector's
+  clock and the user's config" everything between the two apostrophes was
+  masked — hiding real findings. An apostrophe inside a word is no longer a
+  delimiter.
+- **An empty baseline quote suppressed a whole rule.** `"quote": ""`
+  prefix-matched every finding of its rule in its file. Empty quotes are now
+  rejected at load — and the stricter check immediately caught three such
+  entries in this repo's own baseline.
+- **Document-level findings could not be baselined honestly.** Rate reporters
+  (`AI-DASH`, `AI-VOCAB-DENSITY`) have no phrase to quote, which is why those
+  empty quotes existed. `"quote": "*"` is now the explicit whole-document
+  exemption, scoped to one rule in one file.
+- **Links to repeated headings were false positives.** GitHub suffixes
+  duplicate headings (`#setup`, `#setup-1`); the anchor checker now generates
+  the same suffixes.
+
+### Added
+
+- `tests/test_bughunt.py`: a regression test per bug, named after the failure
+  mode.
+- `tests/test_robustness.py`: 29 hostile inputs (CRLF, unterminated fences,
+  control characters, RTL text, 50k-character words, list bombs) run against
+  three configs, asserting no crashes, in-range positions, and bounded
+  runtime against regex-backtracking bait.
+
+Calibration is unchanged: known-good 2.12, separation 72×.
+
 ## 1.1.0 — 2026-07-29
 
 Adds a documentation-conventions battery drawn from the major style guides,
@@ -23,7 +66,7 @@ Eleven rules, each citing a named authority:
 | `DOC-READABILITY` | Flesch-Kincaid grade level, as a metric |
 | `DOC-ACRONYM` | abbreviations never expanded (IEEE 1063, ISO/IEC 26514) — **opt-in** |
 
-Two of these were reshaped by calibration before shipping. `DOC-CONDESCEND`
+Calibration reshaped two of these before shipping. `DOC-CONDESCEND`
 now splits by grammatical role, because "Simple Mail Transfer Protocol" and
 "a simple hash table" describe things rather than the reader's experience;
 only adverbs and reader-directed frames are flagged. `DOC-ACRONYM` is off by
@@ -48,7 +91,7 @@ configurable with `bands:`.
 - `CLARITY-THAT` no longer fires on "Check the agent log" — a dropped "that"
   only matters when a clause follows, not a plain object. Found by writing
   the new example and linting it.
-- Quoted-specimen masking now covers both batteries, not just the AI one.
+- Quoted-specimen masking now covers both batteries, not only the AI one.
 - New `examples/` set: a comprehensive 443-word draft scoring 115 across five
   axes, and its rewrite at 396 words scoring zero, with the six pages it
   links to so the reference validator has a real tree to check.
@@ -69,7 +112,7 @@ does that reliably — and it does not judge whether writing is good.
 
 - **Excess vocabulary, tiered by measured effect size.** Derived from Kobak et
   al. (2025), who tracked word frequencies across 15M PubMed abstracts. Words
-  are tiered by computed excess ratio: strong (≥5×) is `major`, moderate
+  carry a tier from their computed excess ratio: strong (≥5×) is `major`, moderate
   (≥2.5×) is `minor`, mild (≥1.6×) feeds a density signal only, and everything
   below 1.6× is dropped. That last cut is what keeps ordinary technical English
   — "using" at 1.04×, "however" at 1.01× — out of the results.
@@ -89,12 +132,12 @@ does that reliably — and it does not judge whether writing is good.
 
 ### Clarity
 
-Rules are included only where two or more independent authorities agree
-(Google, Microsoft, Federal Plain Language Guidelines, RFC 2119, Gopen & Swan):
-passive voice graded by whether the missing actor costs the reader anything,
-buried verbs, wordiness, subject-verb distance, stress position, inclusive
-language, Latin abbreviations, normative keywords, sentence and paragraph
-budgets.
+A rule enters this battery only when two or more independent authorities
+agree: Google, Microsoft, the Federal Plain Language Guidelines, RFC 2119, and
+Gopen & Swan. The checks cover passive voice, graded by whether the missing
+actor costs the reader anything. They also cover buried verbs, wordiness,
+subject-verb distance, stress position, inclusive language, Latin
+abbreviations, normative keywords, and sentence and paragraph budgets.
 
 ### Scoring
 

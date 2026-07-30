@@ -19,7 +19,7 @@ from .config import Config
 from .engine import aggregate, lint_file, lint_text
 from .finding import Finding, Severity
 
-__version__ = "1.1.0"
+__version__ = "1.1.1"
 
 __all__ = [
     "Baseline", "Config", "Finding", "Severity",

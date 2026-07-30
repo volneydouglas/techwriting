@@ -39,7 +39,13 @@ NON_TERMINAL_ABBREVS = {
 
 WORD_RE = re.compile(r"[^\s]+")
 
-QUOTED_RE = re.compile(r"\"[^\"\n]{2,200}\"|“[^”\n]{2,200}”|'[^'\n]{4,200}'")
+# The single-quote branch must not treat apostrophes as delimiters: in
+# "the collector's clock and the user's config", the span between the two
+# possessives is ordinary prose, and masking it hid real findings
+# (bug-hunt 2026-07-30). An opening quote cannot follow a word character
+# and a closing quote cannot precede one.
+QUOTED_RE = re.compile(
+    r"\"[^\"\n]{2,200}\"|“[^”\n]{2,200}”|(?<![\w])'[^'\n]{4,200}'(?![\w])")
 
 
 def scan_text(sentence, config):

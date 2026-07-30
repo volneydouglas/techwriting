@@ -35,6 +35,9 @@ TRIAD_RE = re.compile(
     r"\b[\w'-]+(?: [\w'-]+){0,3}, [\w'-]+(?: [\w'-]+){0,3},? (?:and|or) [\w'-]+", re.I)
 BOLD_TERM_RE = re.compile(
     r"^\s*(?:[-*+]|\d{1,3}[.)])\s+\*\*[^*\n]+?(?::\*\*|\*\*\s*[:—–-])", re.M)
+# Bug-hunt 2026-07-30: check_bold_term_lists scanned doc.raw, so bullet lists
+# inside fenced code blocks counted toward AI-BOLDLIST.
+FENCE_BLOCK_RE = re.compile(r"(?ms)^\s*(```|~~~).*?^\s*\1")
 EMOJI_RE = re.compile(
     "[\U0001F300-\U0001FAFF\U00002700-\U000027BF\U0001F000-\U0001F0FF"
     "\U00002600-\U000026FF✅✨❌⭐❗❤]")
@@ -400,9 +403,10 @@ def check_intensifiers(doc, config):
 
 
 def check_bold_term_lists(doc, config):
-    matches = list(BOLD_TERM_RE.finditer(doc.raw))
+    body = FENCE_BLOCK_RE.sub(lambda m: "\n" * m.group(0).count("\n"), doc.raw)
+    matches = list(BOLD_TERM_RE.finditer(body))
     if len(matches) >= 4:
-        line = doc.raw[: matches[0].start()].count("\n") + 1
+        line = body[: matches[0].start()].count("\n") + 1
         yield Finding(
             rule="AI-BOLDLIST", severity=Severity.INFO,
             message=f"{len(matches)} bullets in the '**Term:** explanation' shape.",

@@ -3,14 +3,14 @@
 # quoting it, so the detector correctly finds specimens throughout.
 # Reviewed 2026-07-29. Clarity findings are NOT baselined -- those
 # are real and were fixed or accepted on their merits.
-{"rule": "AI-DASH", "file": "docs/ai-tics.md", "quote": "", "why": "specimen: em-dashes quoted in examples of the em-dash tic"}
-{"rule": "AI-BOLDLIST", "file": "docs/ai-tics.md", "quote": "", "why": "specimen: the bold-term list demonstrates the pattern it names"}
+{"rule": "AI-DASH", "file": "docs/ai-tics.md", "quote": "*", "why": "specimen: em-dashes quoted in examples of the em-dash tic"}
+{"rule": "AI-BOLDLIST", "file": "docs/ai-tics.md", "quote": "*", "why": "specimen: the bold-term list demonstrates the pattern it names"}
 {"rule": "AI-ARTIFACT", "file": "docs/ai-tics.md", "quote": "lorem ipsum", "why": "specimen: placeholder text quoted as an example of the artifact"}
 {"rule": "AI-PHRASE", "file": "docs/ai-tics.md", "quote": "The result? ", "why": "specimen: the construction is quoted as the example being named"}
 {"rule": "AI-PHRASE", "file": "docs/ai-tics.md", "quote": "The catch? ", "why": "specimen: the construction is quoted as the example being named"}
 {"rule": "AI-PHRASE", "file": "docs/ai-tics.md", "quote": "Not fast. Not cheap. Just ", "why": "specimen: the construction is quoted as the example being named"}
 {"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "delves", "why": "specimen: this word is the subject of the catalog entry naming it"}
-{"rule": "AI-VOCAB-DENSITY", "file": "docs/ai-tics.md", "quote": "", "why": "specimen density: the page is a list of these words by design"}
+{"rule": "AI-VOCAB-DENSITY", "file": "docs/ai-tics.md", "quote": "*", "why": "specimen density: the page is a list of these words by design"}
 {"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "underscores", "why": "specimen: this word is the subject of the catalog entry naming it"}
 {"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "meticulously", "why": "specimen: this word is the subject of the catalog entry naming it"}
 {"rule": "AI-VOCAB", "file": "docs/ai-tics.md", "quote": "showcasing", "why": "specimen: this word is the subject of the catalog entry naming it"}

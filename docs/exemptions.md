@@ -44,15 +44,15 @@ detects the grammatical position for a built-in set:
 | realm | "set the **realm** before you authenticate" | "in the **realm** of possibility" |
 | harness | "attach the wiring **harness**" | "**harness** the power of your data" |
 
-This was found by calibration, not by guesswork: PEP 8 (2001) says
+Calibration found this, not guesswork: PEP 8 (2001) says
 "underscores" 19 times, meaning the `_` character.
 
 ## 4. Quoted or attributed text
 
 Prose you are quoting is not prose you wrote. techlint already skips fenced
-code blocks, inline code, and tables. For quoted prose — an upstream changelog,
-a vendor's wording, a screenshot transcript — baseline it with that as the
-reason.
+code blocks, inline code, and tables. For quoted prose such as an upstream
+changelog, a vendor's wording, or a screenshot transcript, baseline it with
+that as the reason.
 
 ---
 
@@ -71,6 +71,12 @@ Generate candidate lines, then edit each one:
 ```
 techlint --baseline-suggest docs/ >> .techlint-baseline.jsonl
 ```
+
+Document-level findings (`AI-DASH`, `AI-VOCAB-DENSITY`, `DOC-READABILITY`,
+and the other rate reporters) have no phrase to quote. For those, set
+`"quote": "*"`: an explicit whole-document exemption for that rule in that
+file. An empty quote is rejected outright; it used to match everything by
+accident, and a silence should never be an accident.
 
 Three rules, non-negotiable:
 
