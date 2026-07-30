@@ -285,3 +285,37 @@ class TestPathCollection:
         (tmp_path / "b.txt").write_text("x\n")
         found = collect([str(tmp_path)], Config())
         assert len(found) == len(set(found)) == 2
+
+
+class TestReleaseTooling:
+    """The release pipeline trusts these two invariants."""
+
+    def test_changelog_has_section_for_current_version(self):
+        import techlint
+        sys.path.insert(0, "tools")
+        from release_notes import extract
+        text = Path("CHANGELOG.md").read_text()
+        notes = extract(techlint.__version__, text)
+        assert len(notes.split()) > 20  # a real entry, not a stub
+
+    def test_extract_unknown_version_fails_loudly(self):
+        sys.path.insert(0, "tools")
+        from release_notes import extract
+        with pytest.raises(SystemExit, match="no section"):
+            extract("99.99.99", "# Changelog\n\n## 1.0.0\n\nnotes\n")
+
+    def test_extract_takes_only_its_own_section(self):
+        sys.path.insert(0, "tools")
+        from release_notes import extract
+        log = "# Changelog\n\n## 2.0.0 — 2026-01-01\n\nnew\n\n## 1.0.0\n\nold\n"
+        assert extract("2.0.0", log) == "new\n"
+        assert extract("1.0.0", log) == "old\n"
+
+    def test_package_version_matches_pyproject(self):
+        import techlint
+        try:
+            import tomllib
+        except ImportError:      # Python 3.9/3.10
+            pytest.skip("tomllib requires Python 3.11+; CI covers this on 3.12")
+        with open("pyproject.toml", "rb") as f:
+            assert tomllib.load(f)["project"]["version"] == techlint.__version__

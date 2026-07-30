@@ -52,6 +52,10 @@ configurable with `bands:`.
 - New `examples/` set: a comprehensive 443-word draft scoring 115 across five
   axes, and its rewrite at 396 words scoring zero, with the six pages it
   links to so the reference validator has a real tree to check.
+- A release pipeline: pushing a version bump to `main` re-runs the quality
+  gate, then creates the tag, the GitHub Release (notes taken from this
+  changelog), and the built distributions. PyPI publishing is wired behind
+  the `ENABLE_PYPI` repository variable.
 
 ## 1.0.0 — 2026-07-29
 

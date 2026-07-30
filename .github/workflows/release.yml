@@ -1,0 +1,132 @@
+# Release pipeline.
+#
+# Watches the version in pyproject.toml on main. When a push lands whose
+# version has no matching tag, this workflow — after the full quality gate —
+# creates the tag, builds the wheel and sdist, extracts that version's
+# CHANGELOG section, and publishes a GitHub Release with the artifacts
+# attached. Releasing is therefore one reviewable diff: bump the version,
+# write the changelog entry, merge.
+#
+# Idempotent by design: on every other push the tag already exists and the
+# workflow exits in seconds. Re-running a failed release is safe for the same
+# reason.
+
+name: Release
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Read version and check for an existing tag
+        id: version
+        run: |
+          VERSION=$(python3 -c "import tomllib; print(tomllib.load(open('pyproject.toml','rb'))['project']['version'])")
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          if git ls-remote --exit-code origin "refs/tags/v$VERSION" >/dev/null 2>&1; then
+            echo "v$VERSION already released — nothing to do."
+            echo "new=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "v$VERSION has no tag — releasing."
+            echo "new=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/setup-python@v5
+        if: steps.version.outputs.new == 'true'
+        with:
+          python-version: "3.12"
+
+      - name: Quality gate — tests
+        if: steps.version.outputs.new == 'true'
+        run: |
+          pip install -e ".[dev]"
+          pytest -q
+
+      - name: Quality gate — version consistency
+        if: steps.version.outputs.new == 'true'
+        run: |
+          PKG=$(python3 -c "import techlint; print(techlint.__version__)")
+          test "$PKG" = "${{ steps.version.outputs.version }}" || {
+            echo "pyproject says ${{ steps.version.outputs.version }} but the package says $PKG"; exit 1; }
+
+      - name: Quality gate — calibration separation
+        if: steps.version.outputs.new == 'true'
+        run: |
+          python benchmarks/fetch.py
+          python benchmarks/run_calibration.py
+          python3 - <<'PY'
+          import json, sys
+          r = json.load(open("benchmarks/results/calibration.json"))
+          good, bad = r["known_good_wscore"], r["known_bad"][0]["wscore"]
+          sep = bad / max(good, 0.01)
+          print(f"known-good {good}  known-bad {bad}  separation {sep:.1f}x")
+          if sep < 20:
+              sys.exit("separation below 20x — not releasing a broken instrument")
+          PY
+
+      - name: Quality gate — the tool lints its own docs
+        if: steps.version.outputs.new == 'true'
+        run: techlint --no-color --gate 4.0 README.md CONTRIBUTING.md CHANGELOG.md docs/
+
+      - name: Build distributions
+        if: steps.version.outputs.new == 'true'
+        run: |
+          pip install build
+          python -m build
+
+      - name: Extract release notes from CHANGELOG.md
+        if: steps.version.outputs.new == 'true'
+        run: python tools/release_notes.py "${{ steps.version.outputs.version }}" release-notes.md
+
+      - name: Create tag and GitHub Release
+        if: steps.version.outputs.new == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "v${{ steps.version.outputs.version }}" \
+            --target "$GITHUB_SHA" \
+            --title "techlint ${{ steps.version.outputs.version }}" \
+            --notes-file release-notes.md \
+            dist/*
+
+  # Publishing to PyPI is prepared but off until the project is registered
+  # there. To enable: create the project on PyPI, add a Trusted Publisher for
+  # this repository and workflow (no API token needed), then set the
+  # repository variable ENABLE_PYPI to "true".
+  pypi:
+    needs: release
+    if: vars.ENABLE_PYPI == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Skip unless this push minted a new tag
+        id: version
+        run: |
+          VERSION=$(python3 -c "import tomllib; print(tomllib.load(open('pyproject.toml','rb'))['project']['version'])")
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+      - name: Build
+        run: pip install build && python -m build
+      - name: Publish to PyPI (trusted publishing)
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          skip-existing: true

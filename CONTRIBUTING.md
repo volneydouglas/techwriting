@@ -96,3 +96,24 @@ regeneration silently reverts you.
 - Rules that only make sense inside one house style. Make it a config option.
 - Network calls in the linting path. Linting stays offline and deterministic.
 - Runtime dependencies. The stdlib-only constraint is a feature.
+
+## Releasing
+
+Releases are cut by the pipeline (`.github/workflows/release.yml`), not by
+hand. One reviewable diff does everything:
+
+1. Bump `version` in `pyproject.toml` and `__version__` in
+   `techlint/__init__.py` (a test fails if they disagree).
+2. Add a `## <version>` section to `CHANGELOG.md` (the pipeline fails without
+   one — the changelog is the release notes).
+3. Merge to `main`.
+
+On push, the workflow sees a version with no matching tag, re-runs the full
+quality gate (tests, version consistency, calibration separation, the
+self-lint), builds the wheel and sdist, and publishes a GitHub Release with
+the changelog section as its notes. Pushes whose version is already tagged
+exit in seconds, so the workflow is safe to re-run.
+
+PyPI publishing is wired but dormant: register the project on PyPI with a
+Trusted Publisher for this repository, then set the repository variable
+`ENABLE_PYPI` to `true`.
