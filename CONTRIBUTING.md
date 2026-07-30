@@ -97,6 +97,15 @@ regeneration silently reverts you.
 - Network calls in the linting path. Linting stays offline and deterministic.
 - Runtime dependencies. The stdlib-only constraint is a feature.
 
+## Code review
+
+Pull requests get an automated first pass from CodeRabbit, configured in
+`.coderabbit.yaml`. The configuration encodes this document's standards —
+citations for rules, calibration before thresholds, negative tests — so the
+bot argues from the repo's rules rather than generic taste. Treat its
+comments the way this project treats lint findings: fix, or reply with the
+reason it does not apply. A human review still decides the merge.
+
 ## Releasing
 
 Releases are cut by the pipeline (`.github/workflows/release.yml`), not by
