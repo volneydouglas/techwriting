@@ -160,13 +160,21 @@ class Config:
 
 def _parse_yaml(text: str):
     """Handles the shapes used by techlint.yaml: nested maps of scalars and
-    lists of scalars, two-space indented. Falls back to PyYAML if installed."""
+    lists of scalars, two-space indented. Uses PyYAML when it is installed."""
     try:
         import yaml  # noqa: PLC0415
         return yaml.safe_load(text)
     except ImportError:
-        pass
+        return _parse_yaml_subset(text)
 
+
+def _parse_yaml_subset(text: str):
+    """The stdlib fallback, and the path every zero-dependency install takes.
+
+    Kept separate from _parse_yaml so the tests can exercise it directly. Run
+    through _parse_yaml instead and a dev machine with PyYAML installed tests
+    PyYAML, leaving this parser unverified until CI.
+    """
     root = {}
     stack = [(-1, root)]
     for raw in text.splitlines():
@@ -179,9 +187,10 @@ def _parse_yaml(text: str):
             stack.pop()
         parent = stack[-1][1]
         if body.startswith("- "):
-            if not isinstance(parent, list):
-                continue
-            parent.append(_scalar(body[2:].strip()))
+            # _Pending is a dict subclass that also collects list items, so it
+            # is never a `list` -- test for the capability, not the type.
+            if isinstance(parent, (list, _Pending)):
+                parent.append(_scalar(body[2:].strip()))
             continue
         if ":" not in body:
             continue

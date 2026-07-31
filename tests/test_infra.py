@@ -8,7 +8,7 @@ import pytest
 from pathlib import Path
 
 from techlint import Baseline, Config, lint_text
-from techlint.config import _parse_yaml
+from techlint.config import _parse_yaml, _parse_yaml_subset
 from techlint.engine import aggregate, verdict
 from techlint.finding import Finding, Severity, weighted_score
 
@@ -105,6 +105,29 @@ class TestConfig:
         assert data["mode"] == "procedure"
         assert data["budgets"]["sentence_words"] == 18
         assert data["domain_vocabulary"] == ["harness", "realm"]
+
+    def test_yaml_subset_parser_directly(self):
+        # _parse_yaml prefers PyYAML, so going through it tests PyYAML on any
+        # machine that has it installed. Zero-dependency installs take this
+        # path instead, so pin it regardless of the environment.
+        data = _parse_yaml_subset(
+            "mode: procedure\n"
+            "budgets:\n"
+            "  sentence_words: 18\n"
+            "domain_vocabulary:\n"
+            "  - harness\n"
+            "  - realm\n"
+            "exclude:\n"
+            "  - generated-*\n")
+        assert data["mode"] == "procedure"
+        assert data["budgets"] == {"sentence_words": 18}
+        assert data["domain_vocabulary"] == ["harness", "realm"]
+        assert data["exclude"] == ["generated-*"]
+
+    def test_yaml_subset_parser_empty_list_stays_a_map(self):
+        # A key with no children resolves to a map, not a list.
+        assert _parse_yaml_subset("budgets:\n  sentence_words: 20\n") == {
+            "budgets": {"sentence_words": 20}}
 
     def test_yaml_file_load(self, tmp_path):
         p = tmp_path / "techlint.yaml"

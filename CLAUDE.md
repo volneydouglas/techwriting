@@ -19,8 +19,8 @@ student or an employee as an accusation. Keep that line intact.
 
 ## Commands
 
-```
-pip install -e ".[dev]" && pytest -q      # 172 tests, all should pass
+```sh
+pip install -e ".[dev]" && pytest -q      # 174 tests, all should pass
 techlint docs/                            # lint a tree
 techlint --explain AI-VOCAB               # what a rule means and where it came from
 techlint --baseline-suggest docs/         # emit exemption lines for review
@@ -32,7 +32,7 @@ python benchmarks/fetch.py && python benchmarks/run_calibration.py
 1. `pytest -q` on 3.9 and 3.12.
 2. `examples/before.md` must trip a gate of 10; `examples/after.md` must pass it.
    The before/after pair is a contract, so edit both together.
-3. **Dogfood:** `techlint --gate 4.0 README.md CONTRIBUTING.md CHANGELOG.md docs/`.
+3. **Dogfood:** `techlint --gate 4.0 README.md CONTRIBUTING.md CHANGELOG.md CLAUDE.md docs/`.
    Prose added to this repo has to survive its own linter.
 4. Known-good to known-bad separation stays above 20x, and the pre-LLM canon stays
    under 3.0. Below that, the instrument stopped discriminating.
@@ -43,9 +43,16 @@ Full version in `CONTRIBUTING.md`. The short form:
 
 - **Evidence required.** Two independent style authorities for a clarity rule, or
   a measured effect size for an AI-tic rule. Taste is not evidence.
-- **It must not fire on the canon.** RFCs and PEPs from 1981 to 2001 cannot be
-  AI-written, so anything a rule finds there is a false positive by construction.
-  If your rule fires on them, **fix the rule, not the corpus.**
+- **It must not fire on the canon.** RFCs and PEPs first published between 1981 and
+  2001 predate the models, so anything a rule finds there is a false positive by
+  construction. If your rule fires on them, **fix the rule, not the corpus.**
+
+  One caveat to keep in mind before treating a canon hit as proof. RFCs are
+  immutable once published, but PEPs are living documents: PEP 8 carries a 2013
+  post-date on top of its 2001 original. `benchmarks/fetch.py` pulls the current
+  page and caches it without a revision or checksum, so a PEP in the corpus is
+  today's text, not a 2001 snapshot. The evidence is strong rather than airtight,
+  and pinning revisions would make it airtight.
 - **Both test directions**, and the negative test matters more. Anyone can write a
   regex that matches; the engineering is in what it declines to match. `allowing`
   and `ensuring` do real work in a trailing clause and stay unflagged.
