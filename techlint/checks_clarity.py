@@ -451,12 +451,44 @@ IRREGULAR_BASE = {
     "written": "write", "put": "put", "read": "read", "cut": "cut",
     "hit": "hit", "shut": "shut", "hidden": "hide", "frozen": "freeze",
 }
-# -ed forms whose base keeps the final 'e' ("ensured" -> "ensure", not "ensur").
-_KEEP_E = re.compile(r"(?:[bcdfgklmnprstvz]|[^aeiou]l)e$")
+# Bases ending in silent-e whose -ed stem gives no orthographic clue.
+# "created" -> "creat" and "edited" -> "edit" look identical in shape, so the
+# ambiguous ones live in a list. The bug-hunt found the previous heuristic
+# producing "Disconnecte the ..." and "Adjuste the ..." in suggestions.
+_E_BASES = {
+    "create", "update", "delete", "validate", "invalidate", "generate",
+    "migrate", "integrate", "iterate", "calculate", "calibrate", "allocate",
+    "deallocate", "duplicate", "replicate", "terminate", "eliminate",
+    "evaluate", "escalate", "populate", "simulate", "translate", "isolate",
+    "enumerate", "authenticate", "communicate", "indicate", "initiate",
+    "associate", "activate", "deactivate", "rotate", "annotate", "propagate",
+    "configure", "ensure", "measure", "restore", "store", "ignore", "require",
+    "acquire", "compare", "declare", "share", "prepare", "capture", "secure",
+    "structure", "restructure", "expire", "retire",
+    "cache", "place", "replace", "trace", "reduce", "produce", "introduce",
+    "notice", "service", "release", "increase", "decrease", "parse", "reverse",
+    "traverse", "merge", "purge", "charge", "change", "exchange", "manage",
+    "stage", "encode", "decode", "upgrade", "downgrade", "include", "exclude",
+    "provide", "divide", "close", "expose", "dispose", "compose", "pause",
+    "complete", "execute", "compute", "route", "distribute", "contribute",
+    "rotate", "mute", "define", "combine", "examine", "determine", "refine",
+    "tune", "invoke", "revoke", "promote", "demote", "note", "quote",
+    "name", "rename", "file", "compile", "profile", "resolve", "solve",
+    "involve", "reserve", "observe", "serve", "preserve", "save", "type",
+    "escape", "use", "reuse", "invite", "recite", "delegate", "aggregate",
+}
 
 
 def _verb_base(pp: str) -> str:
-    """Best-effort base form of a past participle, for imperative suggestions."""
+    """Best-effort base form of a past participle, for imperative suggestions.
+
+    Order matters:
+      irregulars -> doubled consonant ("stopped") -> -ied ("applied") ->
+      endings English never leaves bare (v, z, soft c, u, consonant+l) ->
+      the silent-e list -> the bare stem.
+    "adjust", "disconnect", "install", "monitor", and "edit" fall through to
+    the bare stem, which is the correct base for all of them.
+    """
     w = pp.lower()
     if w in IRREGULAR_BASE:
         return IRREGULAR_BASE[w]
@@ -467,8 +499,13 @@ def _verb_base(pp: str) -> str:
         return stem[:-1]                      # stopped -> stop
     if stem.endswith("i"):
         return stem[:-1] + "y"                # applied -> apply
-    if _KEEP_E.search(stem + "e"):
-        return stem + "e"                     # ensured -> ensure, configured -> configure
+    # English orthography does not end words in bare v, z, soft c, u, or a
+    # consonant+l cluster (other than ll): remove, analyze, produce, argue,
+    # enable. "install" (ll) and "fail" (vowel+l) are excluded on purpose.
+    if re.search(r"(?:[vzcu]|qu|[^aeioul]l)$", stem):
+        return stem + "e"
+    if stem + "e" in _E_BASES:
+        return stem + "e"                     # created -> create, cached -> cache
     return stem
 
 

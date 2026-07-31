@@ -197,7 +197,7 @@ Or as a pre-commit hook:
 ```yaml
 repos:
   - repo: https://github.com/volneydouglas/techwriting
-    rev: v1.1.0
+    rev: v1.1.1
     hooks:
       - id: techlint
 ```

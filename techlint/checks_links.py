@@ -42,8 +42,17 @@ def _anchor(heading: str) -> str:
 
 
 def _anchors_of(text: str) -> set:
+    """All anchors GitHub would generate, including the -1/-2 suffixes it
+    appends to repeated headings (two "## Setup" sections yield "setup" and
+    "setup-1" -- bug-hunt 2026-07-30)."""
     body = FENCE_RE.sub("", text)
-    return {_anchor(m.group(2)) for m in HEADING_RE.finditer(body)}
+    out, seen = set(), {}
+    for m in HEADING_RE.finditer(body):
+        a = _anchor(m.group(2))
+        n = seen.get(a, 0)
+        seen[a] = n + 1
+        out.add(a if n == 0 else f"{a}-{n}")
+    return out
 
 
 def check_links(doc, config):

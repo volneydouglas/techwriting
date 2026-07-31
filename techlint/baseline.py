@@ -17,6 +17,11 @@ Rules of use (non-negotiable, learned the hard way in the source project):
      an unexamined suppression.
   3. `quote` matches by prefix, so a baselined hit survives small edits around
      it but not a rewrite of the phrase itself.
+  4. Document-level findings (AI-DASH, AI-VOCAB-DENSITY, DOC-READABILITY, ...)
+     report a rate, not a phrase, so they have nothing to quote. For those,
+     set `"quote": "*"` -- an explicit whole-document exemption for that rule
+     in that file. An *empty* quote is rejected: it used to prefix-match
+     everything by accident, which is a silence, not a decision.
 """
 
 import json
@@ -48,14 +53,27 @@ class Baseline:
                 raise ValueError(
                     f"{p}:{n}: baseline entry missing {sorted(missing)}. "
                     "Every exemption needs a written reason.")
+            empty = [k for k in ("rule", "file", "quote", "why") if not e[k]]
+            if empty:
+                raise ValueError(
+                    f"{p}:{n}: baseline entry has empty {empty}. An empty "
+                    "quote matches by prefix against everything and would "
+                    "suppress the whole rule for that file. For a "
+                    "document-level finding with no extract, make the intent "
+                    "explicit with \"quote\": \"*\".")
             entries.append(e)
         return cls(entries)
 
     def suppresses(self, finding) -> bool:
         for e in self.entries:
-            if (e["rule"] == finding.rule
-                    and _same_file(e["file"], finding.path)
-                    and finding.extract.startswith(e["quote"])):
+            quote = e.get("quote")
+            if not quote:
+                continue      # prefix-match against "" would suppress everything
+            if e["rule"] != finding.rule or not _same_file(e["file"], finding.path):
+                continue
+            # "*" is the explicit whole-document exemption for findings that
+            # report a rate rather than a phrase and so have no extract.
+            if quote == "*" or finding.extract.startswith(quote):
                 return True
         return False
 

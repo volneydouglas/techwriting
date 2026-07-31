@@ -20,7 +20,7 @@ student or an employee as an accusation. Keep that line intact.
 ## Commands
 
 ```sh
-pip install -e ".[dev]" && pytest -q      # 174 tests, all should pass
+pip install -e ".[dev]" && pytest -q      # 289 tests, all should pass
 techlint docs/                            # lint a tree
 techlint --explain AI-VOCAB               # what a rule means and where it came from
 techlint --baseline-suggest docs/         # emit exemption lines for review
@@ -36,6 +36,16 @@ python benchmarks/fetch.py && python benchmarks/run_calibration.py
    Prose added to this repo has to survive its own linter.
 4. Known-good to known-bad separation stays above 20x, and the pre-LLM canon stays
    under 3.0. Below that, the instrument stopped discriminating.
+
+`release.yml` runs the same gates on a version tag and must stay idempotent, so it
+exits early when the version is already tagged. A new gate belongs in both
+workflows, or carries a stated reason for living in only one.
+
+`.coderabbit.yaml` points automated review at `CONTRIBUTING.md`'s evidence bar
+rather than generic taste. Its `path_instructions` are the same standards, so read
+them before changing a rule, and keep numbers cited in docs (calibration scores,
+separation, test counts) matching the suite and
+`benchmarks/results/calibration.json`.
 
 ## The bar for a new rule
 
@@ -56,6 +66,10 @@ Full version in `CONTRIBUTING.md`. The short form:
 - **Both test directions**, and the negative test matters more. Anyone can write a
   regex that matches; the engineering is in what it declines to match. `allowing`
   and `ensuring` do real work in a trailing clause and stay unflagged.
+- **Regression tests for fixed bugs go in `tests/test_bughunt.py`**, named after
+  the failure mode, with the reproduction in the docstring.
+  `tests/test_robustness.py` holds the backtracking bait corpus and the
+  position-tracking invariants.
 - **When torn between two severities, take the lower one.** A noisy linter gets
   turned off, and a linter that is off catches nothing.
 
@@ -84,6 +98,13 @@ re-run calibration. Never fix a finding by weakening a document that was right.
   document verdict. PEP 8 was flagged 19 times for "underscores", which it uses to
   mean the `_` character. The fix was a grammatical-position guard, not an
   exception for PEP 8.
+- **A green local suite does not mean a green CI.** PyYAML is a common transitive
+  install, and `_parse_yaml` prefers it, so a machine that has it runs different
+  code from CI, which has none. That gap once hid a bug that dropped every list
+  item from the fallback parser, emptying `domain_vocabulary` and `exclude` for
+  zero-dependency installs. Test `_parse_yaml_fallback` directly, never through
+  `_parse_yaml`. Before trusting a local pass on anything config-related, re-run
+  with `yaml` blocked from import.
 
 ## Writing prose in this repo
 

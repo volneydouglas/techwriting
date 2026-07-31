@@ -8,7 +8,7 @@ import pytest
 from pathlib import Path
 
 from techlint import Baseline, Config, lint_text
-from techlint.config import _parse_yaml, _parse_yaml_subset
+from techlint.config import _parse_yaml, _parse_yaml_fallback
 from techlint.engine import aggregate, verdict
 from techlint.finding import Finding, Severity, weighted_score
 
@@ -94,7 +94,10 @@ class TestConfig:
             Config.load(p)
 
     def test_yaml_subset_parser(self):
-        data = _parse_yaml(
+        # Call the fallback directly: _parse_yaml prefers PyYAML when it is
+        # installed, so going through it tests PyYAML on some machines and
+        # this parser on others. CI's first release run caught exactly that.
+        data = _parse_yaml_fallback(
             "mode: procedure\n"
             "locale: us\n"
             "budgets:\n"
@@ -106,28 +109,28 @@ class TestConfig:
         assert data["budgets"]["sentence_words"] == 18
         assert data["domain_vocabulary"] == ["harness", "realm"]
 
-    def test_yaml_subset_parser_directly(self):
-        # _parse_yaml prefers PyYAML, so going through it tests PyYAML on any
-        # machine that has it installed. Zero-dependency installs take this
-        # path instead, so pin it regardless of the environment.
-        data = _parse_yaml_subset(
-            "mode: procedure\n"
-            "budgets:\n"
-            "  sentence_words: 18\n"
-            "domain_vocabulary:\n"
-            "  - harness\n"
-            "  - realm\n"
-            "exclude:\n"
-            "  - generated-*\n")
-        assert data["mode"] == "procedure"
-        assert data["budgets"] == {"sentence_words": 18}
-        assert data["domain_vocabulary"] == ["harness", "realm"]
-        assert data["exclude"] == ["generated-*"]
-
-    def test_yaml_subset_parser_empty_list_stays_a_map(self):
-        # A key with no children resolves to a map, not a list.
-        assert _parse_yaml_subset("budgets:\n  sentence_words: 20\n") == {
-            "budgets": {"sentence_words": 20}}
+    def test_fallback_and_pyyaml_agree(self):
+        text = ("mode: procedure\n"
+                "budgets:\n"
+                "  sentence_words: 18\n"
+                "  grade_level: 12\n"
+                "bands:\n"
+                "  light: 5\n"
+                "exclude:\n"
+                "  - generated-*\n"
+                "domain_vocabulary:\n"
+                "  - harness\n"
+                "style:\n"
+                "  contractions: flag\n")
+        fallback = _parse_yaml_fallback(text)
+        assert fallback["domain_vocabulary"] == ["harness"]
+        assert fallback["exclude"] == ["generated-*"]
+        assert fallback["budgets"]["grade_level"] == 12
+        try:
+            import yaml
+        except ImportError:
+            return
+        assert fallback == yaml.safe_load(text)
 
     def test_yaml_file_load(self, tmp_path):
         p = tmp_path / "techlint.yaml"
@@ -308,3 +311,37 @@ class TestPathCollection:
         (tmp_path / "b.txt").write_text("x\n")
         found = collect([str(tmp_path)], Config())
         assert len(found) == len(set(found)) == 2
+
+
+class TestReleaseTooling:
+    """The release pipeline trusts these two invariants."""
+
+    def test_changelog_has_section_for_current_version(self):
+        import techlint
+        sys.path.insert(0, "tools")
+        from release_notes import extract
+        text = Path("CHANGELOG.md").read_text()
+        notes = extract(techlint.__version__, text)
+        assert len(notes.split()) > 20  # a real entry, not a stub
+
+    def test_extract_unknown_version_fails_loudly(self):
+        sys.path.insert(0, "tools")
+        from release_notes import extract
+        with pytest.raises(SystemExit, match="no section"):
+            extract("99.99.99", "# Changelog\n\n## 1.0.0\n\nnotes\n")
+
+    def test_extract_takes_only_its_own_section(self):
+        sys.path.insert(0, "tools")
+        from release_notes import extract
+        log = "# Changelog\n\n## 2.0.0 — 2026-01-01\n\nnew\n\n## 1.0.0\n\nold\n"
+        assert extract("2.0.0", log) == "new\n"
+        assert extract("1.0.0", log) == "old\n"
+
+    def test_package_version_matches_pyproject(self):
+        import techlint
+        try:
+            import tomllib
+        except ImportError:      # Python 3.9/3.10
+            pytest.skip("tomllib requires Python 3.11+; CI covers this on 3.12")
+        with open("pyproject.toml", "rb") as f:
+            assert tomllib.load(f)["project"]["version"] == techlint.__version__
