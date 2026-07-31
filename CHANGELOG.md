@@ -1,5 +1,29 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+
+- **The advertised calibration figures were stale.** The README and
+  `docs/calibration.md` quoted 2.12 per 1,000 words over a 47k-word corpus at
+  72x separation. The committed results say 2.14 over 67k words at 71x, and
+  they reproduce exactly. The quote-parity fix that shipped in 1.1.1 moved the
+  numbers after that release note was drafted, and nothing caught the drift.
+
+### Added
+
+- `tests/test_calibration_claims.py` pins every calibration figure quoted in
+  the README and the calibration doc to `benchmarks/results/calibration.json`.
+  Restoring the old numbers fails three of the new tests.
+- A seventh row in the calibration round history, recording what the bug-hunt
+  release did to the numbers, plus a note that a parser change is a
+  calibration change even when no rule was touched.
+
+### Removed
+
+- `ste_lint/`, a directory of stale bytecode left behind when the aviation-era
+  package was deleted.
+
 ## 1.1.1 — 2026-07-30
 
 A bug-hunt release. Six defects found by adversarial review, each fixed with
@@ -48,7 +72,10 @@ hostile inputs.
   three configs, asserting no crashes, in-range positions, and bounded
   runtime against regex-backtracking bait.
 
-Calibration is unchanged: known-good 2.12, separation 72×.
+Calibration: known-good 2.14, separation 71×. (An earlier draft of this entry
+said the numbers were unchanged at 2.12/72×. That was written before the
+quote-parity fix landed in this same release; correcting sentence splitting
+shifts every per-sentence rate a little.)
 
 ## 1.1.0 — 2026-07-29
 

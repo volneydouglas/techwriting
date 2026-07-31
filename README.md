@@ -57,9 +57,9 @@ positive by construction.
 
 | | weighted score |
 |---|---|
-| pre-LLM technical canon (47k words, 12 texts) | **2.12** /1k (range 1.18–4.36) |
+| pre-LLM technical canon (67k words, 12 texts) | **2.14** /1k (range 1.18–4.36) |
 | deliberately slop-dense fixture | **151.8** /1k |
-| **separation** | **72×** |
+| **separation** | **71×** |
 
 Every calibration round so far has found an instrument bug rather than a
 document defect — including PEP 8 being flagged 19 times for "underscores",

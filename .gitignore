@@ -10,3 +10,6 @@ dist/
 
 # Calibration texts are fetched on demand; results are committed.
 benchmarks/corpus/
+
+# Local maintainer notes, deliberately untracked.
+CLAUDE.md

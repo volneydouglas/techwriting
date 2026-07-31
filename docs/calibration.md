@@ -73,10 +73,15 @@ reviewable without re-fetching.
 
 | measure | value |
 |---|---|
-| known-good weighted mean | **2.12** /1k words (12 texts, ~47k words) |
+| known-good weighted mean | **2.14** /1k words (12 texts, ~67k words) |
 | known-good range | 1.18 (RFC 1035) – 4.36 (RFC 1925, the humility fixture) |
 | known-bad fixture | **151.8** |
-| **separation** | **72×** |
+| **separation** | **71×** |
+
+These come from `benchmarks/results/calibration.json`, which is committed and
+reproducible: run `benchmarks/run_calibration.py` and the file should not
+change. `tests/test_calibration_claims.py` fails if the numbers quoted here
+or in the README drift from that file.
 
 Verdict bands are anchored to these, not guessed: `clean` < 5, `light` < 12,
 `moderate` < 30, `heavy` ≥ 30. Override them per project with `bands:` in
@@ -90,9 +95,8 @@ calibration finding  ->  fix the instrument  ->  add a regression test
                      ->  re-run calibration  ->  update the bands
 ```
 
-This is the only sanctioned way a threshold changes. Four rounds ran while
-building this tool, and every one found an instrument bug rather than a
-document defect:
+This is the only sanctioned way a threshold changes. Seven rounds have run so
+far, and every one found an instrument bug rather than a document defect:
 
 | round | change | canon wscore | separation |
 |---|---|---|---|
@@ -102,11 +106,17 @@ document defect:
 | 4 | homograph guard (`underscores` the character vs the verb); working participles excluded | 1.38 | 108.6× |
 | 5 | style-guide battery added; `DOC-CONDESCEND` split by grammatical role; `DOC-ACRONYM` made opt-in | 1.78 | 85.3× |
 | 6 | corpus extended to all four Diátaxis genres; bands re-anchored | 2.12 | 71.6× |
+| 7 | bug-hunt release: quote-aware sentence splitting, specimen-masking and anchor fixes | 2.14 | 70.9× |
 
 Rounds 5 and 6 raise the known-good number, which looks like a regression and
 is not. Round 5 added eleven new rules; round 6 added five new texts in genres
 the corpus had never covered. A number that stays flat while the instrument
 grows is a number that has stopped measuring.
+
+Round 7 moved it by 0.02. Fixing the sentence splitter changed where sentence
+boundaries fall, and sentence boundaries are the unit most rules measure
+against, so any parser fix perturbs every rate slightly. The lesson is that
+parser changes are calibration changes, even when no rule was touched.
 
 Round 4 is the illustrative one. PEP 8 was flagged 19 times for "underscores" —
 which it uses to mean the `_` character. The finding was real, the rule was
