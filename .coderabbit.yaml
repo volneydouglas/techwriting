@@ -44,8 +44,11 @@ reviews:
         Every rule must cite its evidence in the finding's `why` field and in
         docs/research-basis.md — two independent authorities for a clarity
         rule, a measured effect size or corpus-verified rate for an AI-tic
-        rule. No rule may fire above roughly 1 per 1,000 words on the pre-LLM
-        calibration corpus; above that it is an instrument bug, not a finding.
+        rule. No single rule may fire above roughly 1 per 1,000 words on the
+        pre-LLM canon — the per-rule `corpus_rule_rates_per_1k` figures in
+        benchmarks/results/calibration.json — or it is an instrument bug, not
+        a finding (CONTRIBUTING.md). That is a per-rule bar, and separate from
+        the aggregate known_good_wscore that CI fails above 3.0.
         Flag any new rule or threshold change that is not accompanied
         by a calibration run (benchmarks/run_calibration.py)
         and a regression test. Watch for regex patterns vulnerable to
