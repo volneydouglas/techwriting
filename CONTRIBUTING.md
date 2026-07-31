@@ -8,6 +8,10 @@ pytest -q
 Bug reports and rule proposals are welcome. The bar for a new rule is higher
 than for most linters, for the reason explained below.
 
+For how the code fits together, which files are generated, and the traps that
+have already cost someone an afternoon, see
+[docs/development.md](docs/development.md).
+
 ## Adding or changing a rule
 
 A rule earns its place by surviving two questions.

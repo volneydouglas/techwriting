@@ -70,7 +70,7 @@ def verdict(wscore: float, bands: dict = None) -> str:
     """Bands anchored to the calibration corpus, not guessed.
 
     Pre-LLM human technical canon spans **1.18 to 4.36** with a weighted mean
-    of **2.12** across twelve texts covering all four Diátaxis genres; the
+    of **2.14** across twelve texts covering all four Diátaxis genres; the
     deliberately slop-dense fixture runs **152**. "Clean" therefore has to
     contain every one of those canon texts, which is why the boundary sits at
     5 rather than somewhere tighter that would look more impressive.

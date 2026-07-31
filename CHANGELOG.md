@@ -18,6 +18,9 @@
 - A seventh row in the calibration round history, recording what the bug-hunt
   release did to the numbers, plus a note that a parser change is a
   calibration change even when no rule was touched.
+- `docs/development.md`, a guide to the lint pipeline, the module map, the
+  generated files, and the traps that have already cost debugging time. CI
+  lints it with the rest of the documentation.
 
 ### Removed
 

@@ -214,7 +214,8 @@ techlint/            the linter (stdlib only)
   config.py          per-project config; the framework ships no domain knowledge
   baseline.py        suppression baseline with mandatory reasons
 docs/                style guide, AI tic catalog, research basis,
-                     calibration program, exemptions, removed rules
+                     calibration program, exemptions, removed rules,
+                     development guide
 benchmarks/          calibration harness + committed results
 tools/               regenerate the vocabulary data from the source study
 examples/            before/after pair, wired into CI
