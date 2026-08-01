@@ -25,7 +25,7 @@ jobs:
           techlint --no-color --no-config --gate 10 --mode procedure examples/after.md
 
       - name: Dogfood — this repo's own docs must stay clean
-        run: techlint --no-color --gate 4.0 README.md CONTRIBUTING.md CHANGELOG.md docs/
+        run: techlint --no-color --gate 4.0 README.md CONTRIBUTING.md CHANGELOG.md CLAUDE.md docs/
 
   calibrate:
     runs-on: ubuntu-latest
